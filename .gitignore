@@ -1,0 +1,78 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+Server/coverage/clover.xml
+Server/coverage/coverage-final.json
+Server/coverage/lcov-report/app/business/artist.manager.js.html
+Server/coverage/lcov-report/app/business/business.container.js.html
+Server/coverage/lcov-report/app/business/event.manager.js.html
+Server/coverage/lcov-report/app/business/index.html
+Server/coverage/lcov-report/app/business/post.manager.js.html
+Server/coverage/lcov-report/app/business/ticket.manager.js.html
+Server/coverage/lcov-report/app/business/user.manager.js.html
+Server/coverage/lcov-report/app/config.js.html
+Server/coverage/lcov-report/app/DAO/artistDAO.js.html
+Server/coverage/lcov-report/app/DAO/eventDAO.js.html
+Server/coverage/lcov-report/app/DAO/index.html
+Server/coverage/lcov-report/app/DAO/passwordDAO.js.html
+Server/coverage/lcov-report/app/DAO/postDAO.js.html
+Server/coverage/lcov-report/app/DAO/ticketDAO.js.html
+Server/coverage/lcov-report/app/DAO/tokenDAO.js.html
+Server/coverage/lcov-report/app/index.html
+Server/coverage/lcov-report/app/middleware/admin.js.html
+Server/coverage/lcov-report/app/middleware/auth.js.html
+Server/coverage/lcov-report/app/middleware/index.html
+Server/coverage/lcov-report/app/REST/index.html
+Server/coverage/lcov-report/app/REST/user.endpoint.js.html
+Server/coverage/lcov-report/app/service/applicationException.js.html
+Server/coverage/lcov-report/app/service/index.html
+Server/coverage/lcov-report/app/service/momentWrapper.js.html
+Server/coverage/lcov-report/app/service/mongoConverter.js.html
+Server/coverage/lcov-report/base.css
+Server/coverage/lcov-report/block-navigation.js
+Server/coverage/lcov-report/favicon.png
+Server/coverage/lcov-report/index.html
+Server/coverage/lcov-report/prettify.css
+Server/coverage/lcov-report/prettify.js
+Server/coverage/lcov-report/sort-arrow-sprite.png
+Server/coverage/lcov-report/sorter.js
+Server/coverage/lcov.info
