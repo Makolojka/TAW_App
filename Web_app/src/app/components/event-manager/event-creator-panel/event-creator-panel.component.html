@@ -1,0 +1,714 @@
+<div class="panel-div-reports" *ngIf="panelManagerService.eventCreationVisible">
+  <div class="side-bar">
+    <div class="step">
+      <div class="align-left-row icon-container">
+        <i class="fa-solid fa-calendar-plus icon" style="color: var(--third-color); margin-right: 10px"></i>
+        <p style="color: var(--third-color)" class="progress-step-title">Dodaj szczegóły wydarzenia</p>
+      </div>
+    </div>
+
+    <!--Progress step 1-->
+    <div class="progress-indicator-details">
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber >= 1 && stepNumber <= 6}"  (click)="toggleCreatorPanel('basicInfo')"></div>
+        <div class="text">Podstawowe informacje</div>
+      </div>
+
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber >= 2 && stepNumber <= 6}" (click)="toggleCreatorPanel('location')"></div>
+        <div class="text">Lokalizacja</div>
+      </div>
+
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber >= 3 && stepNumber <= 6}" (click)="toggleCreatorPanel('poster')"></div>
+        <div class="text">Plakat promocyjny</div>
+      </div>
+
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber >= 4 && stepNumber <= 6}" (click)="toggleCreatorPanel('additionalInfo')"></div>
+        <div class="text">Dodatkowe informacje</div>
+      </div>
+
+    </div>
+
+    <div class="step">
+      <div class="align-left-row icon-container">
+        <i class="fa-solid fa-ticket icon" style="color: var(--third-color); margin-right: 10px"></i>
+        <p style="color: var(--third-color)" class="progress-step-title">Dodaj bilety</p>
+      </div>
+    </div>
+
+    <!--Progress step 2-->
+    <div class="progress-indicator-details">
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber >= 5 && stepNumber <= 6}" (click)="toggleCreatorPanel('details')"></div>
+        <div class="text">Szczegóły biletów</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="align-left-row icon-container">
+        <i class="fa-solid fa-star icon" style="color: var(--third-color); margin-right: 10px"></i>
+        <p style="color: var(--third-color)" class="progress-step-title">Dodaj artystów (opcjonalne)</p>
+      </div>
+    </div>
+
+    <!--Progress step 3-->
+    <div class="progress-indicator-details">
+      <div class="align-center-row progress-container">
+        <div class="circle" [ngClass]="{'circle-filled': stepNumber == 6}" (click)="toggleCreatorPanel('artists')"></div>
+        <div class="text">Artyści biorący udział</div>
+      </div>
+    </div>
+
+
+    <!--Side bar end -->
+  </div>
+  <!--TODO: rozbić css, kod i strukture na osobne komponenty-->
+<!--  <form autocomplete="off" method="POST">-->
+    <div class="creator-panel">
+      <!--Step 1-->
+      <div class="basicInfo" *ngIf="basicInfoVisible">
+        <h2>Nazwa wydarzenia</h2>
+        <input type="text" class="input-normal" [(ngModel)]="eventName" name="event_name" id="event_name" placeholder="Wprowadź nazwę wydarzenia">
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && !eventName" class="error">Pole nie może być puste.</div>
+        </div>
+
+        <h2>Krótki opis wydarzenia</h2>
+        <input type="text" class="input-normal" [(ngModel)]="eventText" name="event_text" id="event_text" placeholder="Wprowadź krótki tekst opisujący wydarzenie">
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && !eventText" class="error">Pole nie może być puste.</div>
+        </div>
+
+        <h2>Wybierz kategorie</h2>
+        <div class="categories">
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Muzyka')"
+               [class.category-tile-activated]="isCategorySelected('Muzyka')"
+               (click)="toggleCategory('category','Muzyka')">
+            <span>Muzyka</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Kino')"
+               [class.category-tile-activated]="isCategorySelected('Kino')"
+               (click)="toggleCategory('category','Kino')">
+            <span>Kino</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Teatr')"
+               [class.category-tile-activated]="isCategorySelected('Teatr')"
+               (click)="toggleCategory('category','Teatr')">
+            <span>Teatr</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Targi')"
+               [class.category-tile-activated]="isCategorySelected('Targi')"
+               (click)="toggleCategory('category','Targi')">
+            <span>Targi</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Konwenty')"
+               [class.category-tile-activated]="isCategorySelected('Konwenty')"
+               (click)="toggleCategory('category','Konwenty')">
+            <span>Konwenty</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Sport')"
+               [class.category-tile-activated]="isCategorySelected('Sport')"
+               (click)="toggleCategory('category','Sport')">
+            <span>Sport</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Zwiedzanie')"
+               [class.category-tile-activated]="isCategorySelected('Zwiedzanie')"
+               (click)="toggleCategory('category','Zwiedzanie')">
+            <span>Zwiedzanie</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Inne')"
+               [class.category-tile-activated]="isCategorySelected('Inne')"
+               (click)="toggleCategory('category','Inne')">
+            <span>Inne</span>
+          </div>
+        </div>
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && selectedCategories.length === 0" class="error">Wymagana jest co najmniej 1 kategoria.</div>
+        </div>
+
+    <!--Cinema schema builder-->
+        <div *ngIf="isCategorySelected('Kino')" class="cinema-builder">
+          <h2>Kreator schematu kina</h2>
+          <div class="schema-manager">
+            <h3 class="schema-h3">Podaj ilość miejsc w jednym rzędzie:</h3>
+            <!--<input type="number" placeholder="Rows" [(ngModel)]="roomRows">-->
+            <input type="number" placeholder="Ilość miejsc" [(ngModel)]="roomColumns" (ngModelChange)="onChange($event)">
+
+
+            <h3 class="schema-h3">Wybierz układ:</h3>
+            <div class="categories">
+              <div class="category-tile"
+                   [class.alignment-tile]="!isAlignmentSelected('left')"
+                   [class.alignment-tile-activated]="isAlignmentSelected('left')"
+                   (click)="toggleAlignment('left')">
+                <span style="text-align: left">Wyrównaj do lewej</span>
+              </div>
+
+              <div class="category-tile"
+                   [class.alignment-tile]="!isAlignmentSelected('center')"
+                   [class.alignment-tile-activated]="isAlignmentSelected('center')"
+                   (click)="toggleAlignment('center')">
+                <span style="text-align: center">Wyśrodkuj</span>
+              </div>
+
+              <div class="category-tile"
+                   [class.alignment-tile]="!isAlignmentSelected('right')"
+                   [class.alignment-tile-activated]="isAlignmentSelected('right')"
+                   (click)="toggleAlignment('right')">
+                <span style="text-align: right">Wyrównaj do prawej</span>
+              </div>
+            </div>
+
+            <h3 class="schema-h3">Dostępne akcje:</h3>
+            <div class="add-row-button-container">
+              <button (click)="addRoomSchema(roomRows, roomColumns)">Dodaj rząd</button>
+              <button class="btn-delete" (click)="removeLastRow()">Usuń rząd</button>
+            </div>
+
+            <div class="cinema-schema-container">
+              <div class="cinema-schema-main" *ngIf="cinemaSchema.length !==0">
+                <div class="cinema-screen-container">
+                  <div class="cinema-screen">
+                    <h3 style="padding: 20px 0 0 0">Ekran</h3>
+                    <h4>Sala 1</h4>
+                  </div>
+                </div>
+                <div *ngFor="let room of cinemaSchema; let roomIndex = index" class="cinema-schema" [ngClass]="selectedAlignment">
+                  <div *ngFor="let row of getNumberArray(room.rows); let rowIndex = index" class="room-row">
+                    <div *ngFor="let column of getNumberArray(room.columns); let columnIndex = index" class="sit"
+                         (click)="applyColorToSeat(roomIndex, rowIndex, columnIndex, selectedTicket?.type ?? 'default')"
+                         [ngStyle]="{ 'background-color': getSeatColor(roomIndex, rowIndex, columnIndex) }">
+                      <span>{{ getSeatNumber(room, row, column) }}</span>
+                    </div>
+                    <div class="row-actions">
+                      <button class="btn-apply" (click)="applyColorToRow(roomIndex, rowIndex, selectedTicket?.type ?? 'default')">
+                        <span>Zastosuj kolor</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="legend-container" *ngIf="cinemaSchema.length !==0">
+                <h3>Legenda</h3>
+                <div class="align-center-row">
+                  <div class="" *ngIf="tickets.length == 0">
+                    <h4>Brak biletów. Utwórz bilety w kroku "Dodaj bilety".</h4>
+                  </div>
+                  <div class="zone-button" *ngFor="let ticket of tickets; let i = index" [ngStyle]="getBackgroundColor(i)" (click)="selectTicket(ticket)">
+                    <h4>{{ ticket.type }}</h4>
+                    <h5>{{ ticket.price }} zł</h5>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <!--End of cinema schema container-->
+          </div>
+        </div>
+        <!--End of cinema schema builder-->
+
+        <h2>Wybierz podkategorie</h2>
+        <div class="categories">
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Festiwale')"
+               [class.category-tile-activated]="isSubCategorySelected('Festiwale')"
+               (click)="toggleCategory('subCategory','Festiwale')">
+            <span>Festiwale</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Pop')"
+               [class.category-tile-activated]="isSubCategorySelected('Pop')"
+               (click)="toggleCategory('subCategory','Pop')">
+            <span>Pop</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Rock')"
+               [class.category-tile-activated]="isSubCategorySelected('Rock')"
+               (click)="toggleCategory('subCategory','Rock')">
+            <span>Rock</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Jazz_blues')"
+               [class.category-tile-activated]="isSubCategorySelected('Jazz_blues')"
+               (click)="toggleCategory('subCategory','Jazz_blues')">
+            <span>Jazz/Blues</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Metal')"
+               [class.category-tile-activated]="isSubCategorySelected('Metal')"
+               (click)="toggleCategory('subCategory','Metal')">
+            <span>Metal</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Disco_polo')"
+               [class.category-tile-activated]="isSubCategorySelected('Disco_polo')"
+               (click)="toggleCategory('subCategory','Disco_polo')">
+            <span>Disco polo</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Techno/Elektro')"
+               [class.category-tile-activated]="isSubCategorySelected('Techno/Elektro')"
+               (click)="toggleCategory('subCategory','Techno/Elektro')">
+            <span>Techno/Elektro</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Muzyka Klasyczna')"
+               [class.category-tile-activated]="isSubCategorySelected('Muzyka Klasyczna')"
+               (click)="toggleCategory('subCategory','Muzyka Klasyczna')">
+            <span>Muzyka klasyczna</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isSubCategorySelected('Inne')"
+               [class.category-tile-activated]="isSubCategorySelected('Inne')"
+               (click)="toggleCategory('subCategory','Inne')">
+            <span>Inne</span>
+          </div>
+        </div>
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && selectedSubCategories.length === 0" class="error">Wymagana jest co najmniej 1 podkategoria.</div>
+        </div>
+
+        <h2>Data wydarzenia</h2>
+        <div class="date-container">
+          <div class="input-container input-date">
+            <input type="date" class="input-field" id="startDate" name="startDate" [(ngModel)]="startDate">
+            <label for="startDate" class="input-label">Start wydarzenia</label>
+          </div>
+
+          <div class="input-container input-date">
+            <input type="time" class="input-field" id="startDateTime" name="endDate" [(ngModel)]="startDateTime">
+            <label for="startDateTime" class="input-label">o godzinie (opcjonalne)</label>
+          </div>
+
+          <div class="input-container input-date">
+            <input type="date" class="input-field" id="endDate" name="endDate" [(ngModel)]="endDate">
+            <label for="endDate" class="input-label">Koniec (opcjonalne)</label>
+          </div>
+
+          <div class="input-container input-date">
+            <input type="time" class="input-field" id="endDateTime" name="endDate" [(ngModel)]="endDateTime">
+            <label for="endDateTime" class="input-label">o godzinie (opcjonalne)</label>
+          </div>
+        </div>
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && Object.prototype.toString.call(startDate) === '[object Date]'" class="error">Pole start wydarzenia nie może być puste.</div>
+        </div>
+
+        <div class="next-btn" (click)="toggleCreatorPanel('location')">
+          <span>Dalej</span>
+        </div>
+      </div>
+
+
+      <!--Step 2.-->
+      <div class="location" *ngIf="locationVisible">
+        <h2>Dane lokalizacji</h2>
+        <input type="text" class="input-normal" [(ngModel)]="eventCity"
+               name="eventCity" id="eventCity"
+               placeholder="Wprowadź nazwę miasta">
+        <div *ngIf="isEventFormSubmitted && !eventCity" class="error">Pole nie może być puste.</div>
+
+        <input type="text" class="input-normal" [(ngModel)]="eventPlace"
+               name="eventPlace" id="eventPlace"
+               placeholder="Wprowadź nazwę lokalu/miejsca np. Kraków EXPO">
+        <div *ngIf="isEventFormSubmitted && !eventPlace" class="error">Pole nie może być puste.</div>
+
+        <div class="panel-btn-group">
+          <div class="next-btn border-right-0" (click)="toggleCreatorPanel('basicInfo')">
+            <span>Wstecz</span>
+          </div>
+          <div class="next-btn border-left-0" (click)="toggleCreatorPanel('poster')">
+            <span>Dalej</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!--Step 3.-->
+      <div class="promo-image" *ngIf="posterVisible">
+        <h2>Plakat promocyjny</h2>
+
+        <input type="text" class="input-normal" [(ngModel)]="promoImage"
+               name="promoImage" id="promoImage"
+               placeholder="Wprowadź url zawierający plik z grafiką">
+        <div class="align-center-column">
+          <div *ngIf="isEventFormSubmitted && !promoImage" class="error">Pole nie może być puste.</div>
+        </div>
+
+        <h3>lub</h3>
+
+        <div class="promo-image-add-container">
+          <div class="align-center-column">
+            <i class="fa-solid fa-plus icon-large"></i><h4>Przeciągnij i upuść plik tutaj</h4>
+          </div>
+        </div>
+
+        <div class="panel-btn-group">
+          <div class="next-btn border-right-0" (click)="toggleCreatorPanel('location')">
+            <span>Wstecz</span>
+          </div>
+          <div class="next-btn border-left-0" (click)="toggleCreatorPanel('additionalInfo')">
+            <span>Dalej</span>
+          </div>
+        </div>
+      </div>
+
+      <!--Step 4.-->
+      <div class="additional-info" *ngIf="additionalInfoVisible">
+        <h2>Dodatkowe informacje</h2>
+
+        <textarea
+          class="additional-info-ta"
+          [(ngModel)]="additionalInfo"
+          name="additionalInfo"
+          id="additionalInfo"
+          cols="30"
+          rows="10"
+          placeholder="Wprowadź dodatkowe informacje o wydarzeniu."
+        ></textarea>
+        <div *ngIf="isEventFormSubmitted && !additionalInfo" class="error">Pole nie może być puste.</div>
+
+        <div class="panel-btn-group">
+          <div class="next-btn border-right-0" (click)="toggleCreatorPanel('poster')">
+            <span>Wstecz</span>
+          </div>
+          <div class="next-btn border-left-0" (click)="toggleCreatorPanel('details')">
+            <span>Dalej</span>
+          </div>
+        </div>
+      </div>
+
+      <!--Step 5.-->
+      <div class="tickets" *ngIf="detailsVisible">
+        <h2>Bilety</h2>
+
+        <div class="panel-div" *ngIf="!areTicketsPresent">
+          <div class="missing-text">
+            <h4>Brak utworzonych biletów</h4>
+          </div>
+        </div>
+        <div *ngIf="isEventFormSubmitted && tickets.length === 0" class="error">Wymagane jest utworzenie minimum 1 typu biletu.</div>
+
+        <div *ngFor="let ticket of tickets let i = index" class="ticket">
+          <div class="section section-left">
+            <div>
+              <h3 style="font-size: 20px; color: var(--third-color)">{{ ticket.type }}</h3>
+              <span>{{ ticket.date }}</span>
+            </div>
+          </div>
+          <div class="section">
+            <span>{{ 0 }} Bilet(ów)</span>
+          <!-- TODO: <span>{{ ticket.quantity }} Bilet(ów)</span>-->
+          </div>
+          <div class="section">
+            <span>{{ ticket.price }} zł</span>
+          </div>
+          <div class="section section-right">
+            <i class="fa-solid fa-pen icon-ticket icon-ticket-edit" (click)="editTicket(ticket.type)"></i>
+            <i class="fa-solid fa-trash icon-ticket icon-ticket-delete" (click)="deleteTicket(i)"></i>
+          </div>
+        </div>
+
+        <div class="align-center-column">
+          <div class="ticket-add-button" (click)="openModal('createNewTicket')">
+            <i class="fa-solid fa-plus icon-large"></i>
+            <h4>Dodaj nowy typ biletu</h4>
+          </div>
+        </div>
+
+        <div class="panel-btn-group">
+          <div class="next-btn border-right-0" (click)="toggleCreatorPanel('additionalInfo')">
+            <span>Wstecz</span>
+          </div>
+          <div class="next-btn border-left-0" (click)="toggleCreatorPanel('artists')">
+            <span>Dalej</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!--Step 6.-->
+      <div class="tickets" *ngIf="artistsVisible">
+        <h2>Dodaj artystów z bazy dostępnych artystów</h2>
+
+        <div class="artists">
+          <!--          <h2 id="artists">Artyści bioracy udział w wydarzeniu</h2>-->
+          <div class="slider-container">
+            <div class="slider">
+              <!--Artist circle-->
+              <div class="artist-wrapper" *ngFor="let artist of artistsParticipating">
+                <div class="artist-circle">
+                  <img [src]="artist.image" alt="img-artist"/>
+                </div>
+                <h3>{{ artist.name }}</h3>
+                <button class="read-more-button" (click)="toggleArtist(artist)">
+                  <i class="fa-solid fa-trash icon"></i>
+                </button>
+              </div>
+              <!--Add artist circle-->
+              <div class="artist-wrapper">
+                <div class="artist-circle-add" (click)="openModal('artistsBase')">
+                  <i class="fa-solid fa-plus icon-large"></i>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <h2>Utwórz nowego artystę (opcjonalne)</h2>
+        <div class="align-left-row">
+          <div class="artist-wrapper">
+            <div class="artist-circle-add" (click)="openModal('createNewArtist')" >
+              <i class="fa-solid fa-plus icon-large"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-btn-group">
+          <div class="next-btn border-right-0" (click)="toggleCreatorPanel('details')">
+            <span>Wstecz</span>
+          </div>
+          <div class="next-btn border-left-0" (click)="createNewEvent()">
+            <span>Utwórz wydarzenie</span>
+          </div>
+        </div>
+
+      </div>
+      <!--Creator panel end-->
+    </div>
+<!--  </form>-->
+</div>
+
+
+<!--  Modals  -->
+<!--TODO: przenieść wszystko do /modals-->
+
+<!--  Add existing artist modal -->
+<div class="modal" tabindex="-1" role="dialog" id="artistsBase">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Wybierz artystów biorących udział w twoim wydarzeniu.</h2>
+        <a class="close" (click)="closeModal('artistsBase')" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-close icon"></i>
+        </a>
+      </div>
+      <div class="modal-search-bar">
+        <input type="text" class="search-input" placeholder="Wyszukaj artystę, np. Tede">
+        <div class="search-div">
+          <i class="fa-solid fa-search"></i>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-container sign-in-container">
+          <!--Artist circle-->
+          <div class="artist-container">
+            <div class="align-left-row" *ngFor="let artist of artists">
+              <div class="artist-wrapper">
+                <div class="artist-circle">
+                  <img [src]="artist.image" alt="Artist Image">
+                </div>
+                <h3>{{ artist.name }}</h3>
+                <button class="add-artist-button" (click)="toggleArtist(artist)">
+                  <i class="fa-solid fa-plus icon"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!--Artist circle end-->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="logo" [routerLink]="['/']" style="margin: 10px 0"><img src="assets/log.png" style="transform: scale(1.5); margin: 0"></a>
+        <!--        <button type="button" class="btn">Dodaj artystę</button>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Create new artist-->
+<div class="modal" tabindex="-1" role="dialog" id="createNewArtist">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Utwórz nowego artystę.</h1>
+        <a class="close" (click)="closeModal('createNewArtist')" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-close icon"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="form-container sign-in-container">
+          <form autocomplete="off" method="POST">
+            <input type="text" placeholder="Pseudonim artystyczny (np. Tede)" name="name" [(ngModel)]="newArtist.name" required>
+            <div *ngIf="isFormSubmitted && !newArtist.name" class="error-modal">Pole nie może być puste.</div>
+
+            <input type="text" placeholder="Url " name="image" [(ngModel)]="newArtist.image" required>
+            <div *ngIf="isFormSubmitted && !newArtist.image" class="error-modal">Pole nie może być puste.</div>
+
+            <!--            <input type="text" placeholder="Krótki opis artysty (np. )" name="shortDescription" [(ngModel)]="newArtist.shortDescription" required>-->
+            <textarea
+              class="textarea-modal"
+              placeholder="Krótki opis artysty (np. )"
+              name="shortDescription"
+              [(ngModel)]="newArtist.shortDescription"
+              cols="1"
+              rows="1"
+              maxlength="255"
+              required
+            ></textarea>
+            <div *ngIf="isFormSubmitted && !newArtist.shortDescription" class="error-modal">Pole nie może być puste.</div>
+
+            <textarea
+              class="textarea-modal"
+              placeholder="Opis kariery artysty (opcjonalne)"
+              name="career"
+              [(ngModel)]="newArtist.career"
+              cols="1"
+              rows="1"
+              required
+            ></textarea>
+            <!--            <input type="text" placeholder="Opis kariery artysty (opcjonalne)" name="career" [(ngModel)]="newArtist.career">-->
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" (click)="createNewArtist()">Utwórz artystę</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Create new ticket modal-->
+<div class="modal" tabindex="-1" role="dialog" id="createNewTicket">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header left-aligned">
+        <h1>Utwórz nowy bilet</h1>
+        <a class="close" (click)="closeModal('createNewTicket')" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-close icon"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="form-container">
+          <form>
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Nazwa biletu / Typ biletu</h2>
+            </div>
+            <input type="text" placeholder="np. Bilet VIP" name="type" [(ngModel)]="newTicket.type" required>
+            <div *ngIf="isFormSubmitted && !newTicket.type" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Cena biletu (w zł)</h2>
+            </div>
+            <input type="number" placeholder="np. 250zł" name="price" [(ngModel)]="newTicket.price" required>
+            <div *ngIf="isFormSubmitted && !newTicket.price" class="error-modal">Pole nie może być puste lub równe 0.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Dzień tygodnia (początek wydarzenia)</h2>
+            </div>
+            <input type="text" placeholder="np. sobota" name="dayOfWeek" [(ngModel)]="newTicket.dayOfWeek" required>
+            <div *ngIf="isFormSubmitted && !newTicket.dayOfWeek" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Zakres ważności biletu</h2>
+            </div>
+            <input type="text" placeholder="np. 21-24.08.2023" name="date" [(ngModel)]="newTicket.date" required>
+            <div *ngIf="isFormSubmitted && !newTicket.date" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Liczba dostępnych biletów</h2>
+            </div>
+            <input type="text" placeholder="np. 2000" name="max-tickets" [(ngModel)]="newTicket.maxNumberOfTickets" required>
+            <div *ngIf="isFormSubmitted && !newTicket.maxNumberOfTickets" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Kolor biletu</h2>
+            </div>
+            <input type="text" placeholder="np. #222222" name="color" [(ngModel)]="newTicket.color" required>
+            <div *ngIf="isFormSubmitted && !newTicket.color" class="error-modal">Pole nie może być puste.</div>
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" (click)="createNewTicket()">Dodaj nowy bilet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Edit existing ticket modal-->
+<div class="modal" tabindex="-1" role="dialog" id="updateTicketModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header left-aligned">
+        <h1>Edytuj bilet</h1>
+        <a class="close" (click)="closeModal('updateTicketModal')" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-close icon"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <div class="form-container">
+          <form>
+            <!-- Fields for editing ticket details -->
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Nazwa biletu / Typ biletu</h2>
+            </div>
+            <input type="text" placeholder="np. Bilet VIP" name="type" [(ngModel)]="editedTicket.type" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.type" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Cena biletu (w zł)</h2>
+            </div>
+            <input type="number" placeholder="np. 250zł" name="price" [(ngModel)]="editedTicket.price" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.price" class="error-modal">Pole nie może być puste lub równe 0.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Dzień tygodnia (początek wydarzenia)</h2>
+            </div>
+            <input type="text" placeholder="np. sobota" name="dayOfWeek" [(ngModel)]="editedTicket.dayOfWeek" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.dayOfWeek" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Zakres ważności biletu</h2>
+            </div>
+            <input type="text" placeholder="np. 21-24.08.2023" name="date" [(ngModel)]="editedTicket.date" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.date" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Liczba dostępnych biletów</h2>
+            </div>
+            <input type="text" placeholder="np. 2000" name="max-tickets" [(ngModel)]="editedTicket.maxNumberOfTickets" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.maxNumberOfTickets" class="error-modal">Pole nie może być puste.</div>
+
+            <div class="h2-modal-container">
+              <h2 class="h2-modal" style="margin: 20px 0 0 0">Kolor biletu</h2>
+            </div>
+            <input type="text" placeholder="np. #222222" name="color" [(ngModel)]="editedTicket.color" required>
+            <div *ngIf="isFormSubmitted && !editedTicket.color" class="error-modal">Pole nie może być puste.</div>
+
+
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" (click)="updateTicket(this.editedTicket)">Zapisz zmiany</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Modals end-->

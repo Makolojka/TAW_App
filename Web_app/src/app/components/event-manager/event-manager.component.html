@@ -1,0 +1,32 @@
+<nav-bar></nav-bar>
+<div class="main">
+  <div class="event-bar">
+    <div class="manager-btn" [class.manager-btn-active]="panelManagerService.activeEventsVisible" (click)="panelManagerService.showActiveEvents()">
+      <h3 [style.color]="panelManagerService.activeEventsVisible ? '#2d1a42' : '#7d7d7d'">Aktywne wydarzenia</h3>
+    </div>
+
+    <div class="manager-btn" [class.manager-btn-active]="panelManagerService.reportsVisible" (click)="panelManagerService.showReports()">
+      <h3 [style.color]="panelManagerService.reportsVisible ? '#2d1a42' : '#7d7d7d'">Raporty i statystyki</h3>
+    </div>
+
+    <div class="manager-btn" [class.manager-btn-active]="panelManagerService.eventCreationVisible" (click)="panelManagerService.showEventCreation()">
+      <h3 [style.color]="panelManagerService.eventCreationVisible ? '#2d1a42' : '#7d7d7d'">Stwórz nowe wydarzenie</h3>
+    </div>
+  </div>
+
+    <!--ACTIVE EVENTS-->
+    <div class="panel-div-row">
+      <active-events-panel [userId]="userId"></active-events-panel>
+    </div>
+
+  <!--RAPORTS-->
+  <div>
+    <app-reports-panel [userId]="userId"></app-reports-panel>
+  </div>
+
+  <!--EVENT CREATOR-->
+  <div>
+    <app-event-creator-panel [userId]="userId"></app-event-creator-panel>
+  </div>
+
+</div>

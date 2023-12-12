@@ -1,0 +1,62 @@
+
+<div class="container" [class.right-panel-active]="isRightPanelActive">
+  <div class="form-container sign-up-container">
+    <a class="logo" [routerLink]="['/']"><img src="assets/log.png">BiletSfera</a>
+    <form action="#">
+      <h1>Utwórz konto</h1>
+      <input type="text" class="fadeIn third" name="mem_name" id="mem_name" placeholder="Login" [(ngModel)]="signUpCredentials.name" required>
+      <div *ngIf="isSignUpFormSubmitted && !signUpCredentials.name" class="error">Pole nie może być puste.</div>
+
+      <input type="email" name="emailid" id="emailid" placeholder="Email"
+             [(ngModel)]="signUpCredentials.email" required>
+      <div *ngIf="isSignUpFormSubmitted && !signUpCredentials.email" class="error">Pole nie może być puste.</div>
+
+      <input type="password" class="fadeIn third" name="password" id="password"
+             placeholder="Hasło (5-15 znaków, 1 litera mała i duża oraz 1 znak specjalny)"
+             [(ngModel)]="signUpCredentials.password" required>
+      <div *ngIf="isSignUpFormSubmitted && (!signUpCredentials.password || !isPasswordStrong(signUpCredentials.password))" class="error">
+        <div *ngIf="!signUpCredentials.password" class="error">Pole nie może być puste.</div>
+        <div *ngIf="signUpCredentials.password && !isPasswordStrong(signUpCredentials.password)" class="error">Hasło jest zbyt słabe.</div>
+      </div>
+      <input #rePasswordInput type="password" class="fadeIn third" name="rePassword" id="rePassword"
+             placeholder="Powtórz hasło" [(ngModel)]="rePassword" required>
+      <div *ngIf="isSignUpFormSubmitted && signUpCredentials.password !== rePassword" class="error">Hasła się nie zgadzają.</div>
+      <div *ngIf="inSignUpCorrectCredentials" class="error">Podany email lub login został już zajęty.</div>
+      <button (click)="signUp()" style="margin-top: 25px">Zarejestruj się</button>
+    </form>
+  </div>
+  <div class="form-container sign-in-container">
+    <a class="logo" [routerLink]="['/']"><img src="assets/log.png">BiletSfera</a>
+    <form action="post" autocomplete="off" method="POST">
+      <h1>Zaloguj się</h1>
+      <input type="login" placeholder="Login" name="username" title="Login" [(ngModel)]="signInCredentials.login">
+      <div *ngIf="isFormSubmitted && !signInCredentials.login" class="error">Pole nie może być puste.</div>
+      <div *ngIf="incorrectCredentials" class="error">Podano błędny login lub hasło.</div>
+
+      <input type="password" placeholder="Hasło" [(ngModel)]="signInCredentials.password" name="password" title="Password">
+      <div *ngIf="isFormSubmitted && !signInCredentials.password" class="error">Pole nie może być puste.</div>
+      <a href="#">Zapomniałeś hasła?</a>
+      <button (click)="signIn()">Zaloguj się</button>
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Witaj!</h1>
+        <p>Masz już konto? Zaloguj się, aby móc korzystać z dodatkowych funkcji serwisu.</p>
+        <button class="ghost" id="signIn" (click)="toggleRightPanel()">Zaloguj się</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Witaj!</h1>
+        <p>Nie masz jeszcze konta? Wprowadź swoje dane i dołącz już dziś.</p>
+        <button class="ghost" id="signUp" (click)="toggleRightPanel()">Zarejestruj się</button>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<!--LAYOUT CREDITS: https://codepen.io/FlorinPop17/pen/vPKWjd-->
+

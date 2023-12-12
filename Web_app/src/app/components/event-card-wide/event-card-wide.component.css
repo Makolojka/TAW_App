@@ -1,0 +1,225 @@
+/* Styling for the wide-card component */
+.wide-card {
+  display: flex;
+  align-items: center;
+  /*border-bottom: 1px solid #ccc;*/
+  border-radius: 0px;
+  padding: 10px;
+  width: 100%;
+  height: 150px;
+  margin: 15px 0;
+  box-shadow: 0px 1px 3px 0px rgba(66, 68, 90, 0.2);
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.wide-card:hover {
+  transition: all 0.5s ease-in-out;
+  box-shadow: 0px 2px 8px 0px rgba(66, 68, 90, 0.3);
+  /*background-color: #f3f3f3;*/
+}
+.wide-card:hover .date-location{
+  color: var(--third-color);
+  transition: all 0.5s ease-in-out;
+}
+
+.wide-card:hover .date-location{
+  color: #222;
+  transition: all 0.5s ease-in-out;
+}
+
+.wide-card:hover .short-description{
+  color: #222;
+  transition: all 0.5s ease-in-out;
+}
+
+  /* Image container */
+.image-container {
+  flex: 0 0 20%; /* Adjust the width of the image container */
+  max-width: 200px;
+  min-width: 100px;
+  padding-right: 10px;
+  object-fit: cover;
+  height: 100%; /* Set the height to 100% to fill the container vertically */
+}
+
+/* Image style */
+.image-container img {
+  width: 100%;
+  height: 100%; /* Ensure the image takes the full height of the container */
+  object-fit: cover; /* Maintain the image aspect ratio and cover the container */
+}
+
+/* Content section */
+.content {
+  flex: 1; /* Allow the content section to grow and take remaining space */
+}
+
+/* Top and Bottom section container (Row) */
+.top-bottom-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Top section */
+.top-section {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.title{
+  color: var(--third-color);
+  font-size: 18px;
+}
+.date-location{
+  font-size: 14px;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Bottom section */
+.bottom-section {
+  display: flex;
+  align-items: center;
+}
+
+/* Price */
+.price {
+  font-weight: 500;
+  margin-right: 20px;
+  color: var(--main-bg-color);
+  font-size: 16px;
+}
+
+/* Buy button */
+.buy-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Short description */
+.short-description {
+  font-size: 12px;
+  color: #777; /* Greyed out color */
+  border-top: 1px solid #ccc;
+  padding: 5px 5px;
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-small-screen{
+  display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+  /* Styling for the wide-card component */
+  .wide-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 250px;
+    margin: 25px 0 25px 0;
+    padding: 10px 0;
+    box-shadow: 0px 0px 8px 0px rgba(66, 68, 90, 0.4);
+    /* Other styles... */
+  }
+
+  .wide-card:hover {
+    transition: all 0.5s ease-in-out;
+    box-shadow: 0px 0px 8px 0px rgba(66, 68, 90, 0.6);
+    /*background-color: #f3f3f3;*/
+  }
+  .wide-card:hover .date-location{
+    color: var(--third-color);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .wide-card:hover .date-location{
+    color: #222;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .wide-card:hover .short-description{
+    color: #222;
+    transition: all 0.5s ease-in-out;
+  }
+
+  /* Image container */
+  .image-container {
+    width: 100%;
+    /*max-width: 200px;*/
+    height: 50px; /* Set a fixed height for the image container */
+    margin: 0 auto; /* Center the image horizontally */
+    /*overflow: hidden; !* Hide any overflowing content *!*/
+  }
+
+  /* Image style */
+  .image-container img {
+    width: 100%;
+    height: 50px;
+    object-fit: cover;
+  }
+
+  /* Content section */
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Add space between top and bottom sections */
+    padding: 10px; /* Add padding to the content */
+  }
+
+  /* Top and Bottom section container (Row) */
+  .top-bottom-container {
+    display: flex;
+    flex-direction: column; /* Change direction to column for smaller screens */
+  }
+
+  /* Top section */
+  .top-section {
+    margin-bottom: 10px;
+  }
+
+  /* Bottom section */
+  .bottom-section {
+    display: flex;
+    justify-content: space-between; /* Add space between price and button */
+  }
+
+  /* Price */
+  .price {
+    font-weight: 500;
+    margin-right: 20px;
+    color: var(--main-bg-color);
+    font-size: 16px;
+  }
+
+  /* Buy button */
+  .buy-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Short description */
+  .short-description {
+    min-height: 250px;
+    font-size: 12px;
+    color: #777; /* Greyed out color */
+    border-top: 1px solid #ccc;
+    padding: 5px 5px;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .bottom-section {
+    display: none /* Adjust the spacing between the title and the Buy Ticket button */
+  }
+  .btn-small-screen{
+    display: flex;
+  }
+}

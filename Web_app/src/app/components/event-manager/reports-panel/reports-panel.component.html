@@ -1,0 +1,104 @@
+<div class="panel-div" *ngIf="panelManagerService.reportsVisible">
+  <div class="title-container">
+    <h2>Statystyki ogólne</h2>
+  </div>
+
+  <div class="tile-wrapper">
+    <div class="tile">
+      <h3>{{totalEarnings}} zł</h3>
+      <span class="tile-value">Całkowite zarobki</span>
+    </div>
+    <div class="tile">
+      <h3>{{totalSold}}</h3>
+      <span class="tile-value">Sprzedanych biletów</span>
+    </div>
+    <div class="tile">
+      <h3>{{totalViews}}</h3>
+      <span class="tile-value">Całkowite wyświetlenia</span>
+    </div>
+    <div class="tile">
+      <h3>{{ownedEvents.length}}</h3>
+      <span class="tile-value">Utworzonych wydarzeń</span>
+    </div>
+  </div>
+
+  <!--    <ngx-charts-pie-chart-->
+  <!--      [view]="[1000,400]"-->
+  <!--      [results]="saleData"-->
+  <!--      [legendTitle]="'Product Sale Chart'"-->
+  <!--      [legend]="true"-->
+  <!--      [gradient]="true">-->
+  <!--    </ngx-charts-pie-chart>    -->
+
+  <div class="chart-container">
+    <ngx-charts-line-chart
+      [legend]="legend"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxis]="xAxis"
+      [yAxis]="yAxis"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [timeline]="timeline"
+      [results]="saleData"
+      [scheme]="colorScheme"
+      [legendTitle]="legendTitle"
+      [autoScale]="true"
+    >
+    </ngx-charts-line-chart>
+  </div>
+
+  <div class="title-container">
+    <h2>Aktywne wydarzenia</h2>
+  </div>
+
+  <div class="events-container">
+    <div *ngIf="areEventsPresent">
+      <div *ngFor="let event of eventDetails" class="event-container">
+        <div class="event-wide" (click)="showEventDetails(event.id)">
+          <div class="img">
+            <img [src]="event.image || imageMissing" alt="Event image">
+          </div>
+          <div class="event-desc-container">
+            <div class="event-wide-title">{{ event.title }}</div>
+            <div class="align-left-row" style="margin-left: 20px">
+              <i class="fa-solid fa-location-crosshairs icon"></i>
+              <p class="event-info">{{ event.location }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="tile-wrapper-clicked" *ngIf="event.id === lastEventId">
+          <div class="tile">
+            <h3>{{ totalEarningsForEvent }} zł</h3>
+            <span class="tile-value">Zarobki tego wydarzenia</span>
+          </div>
+          <div class="tile">
+            <h3>{{ totalSoldForEvent }}</h3>
+            <span class="tile-value">Sprzedanych biletów</span>
+          </div>
+          <div class="tile">
+            <h3>{{ event.views }}</h3>
+            <span class="tile-value">Wyświetlenia</span>
+          </div>
+          <div class="tile">
+            <h3>{{ event.tickets.length }}</h3>
+            <span class="tile-value">Utworzonych biletów</span>
+          </div>
+          <div class="tile-wide">
+            <span class="tile-value" style="font-size: 18px; margin-bottom: 10px">Wydarzenie aktywne od</span>
+            <h3>{{ event.createdAt | date: 'MM-dd-yyyy HH:mm' }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!areEventsPresent" class="panel-div">
+      <div class="missing-text">
+        <h4>Brak wydarzeń</h4>
+      </div>
+    </div>
+  </div>
+  <!-- End of events-container -->
+
+</div>
+
+<!-- End of events-container -->

@@ -1,0 +1,31 @@
+.snackbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--green-color);
+  color: white;
+  border-radius: 2px;
+}
+
+.snackbar-content {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.actions {
+  margin-left: auto;
+}

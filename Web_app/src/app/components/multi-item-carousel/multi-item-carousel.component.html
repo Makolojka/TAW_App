@@ -1,0 +1,15 @@
+<div id="carousel" class="custom-carousel">
+  <div class="custom-carousel-inner">
+    <div class="custom-carousel-item" *ngFor="let item of items">
+      <event-card class="custom-carousel-image" [id]="item.id" [title]="item.title" [image]="item.image" [text]="item.text" [tickets]="item.tickets" [date]="item.date" [location]="item.location">
+      </event-card>
+    </div>
+    <!-- Add more carousel items here -->
+  </div>
+  <button class="carousel-control-prev">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <button class="carousel-control-next">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+</div>

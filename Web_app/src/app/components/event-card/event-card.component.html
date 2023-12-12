@@ -1,0 +1,29 @@
+<!--<div class="container">-->
+<!--  <div class="cta">-->
+<!--    <img src="https://www.ebilet.pl/media/cms/media/xcvpz3lq/552x736-profilowe-dd4c7ead-f5b0-9045-ee27-1ae2e092efdc.webp" alt="">-->
+<!--    <div class="text">-->
+<!--      <h2>OD NOWA FESTIWAL</h2>-->
+<!--      <p>OD NOWA - festiwal, który w piękne weekendowe popołudnia zabierze Was w kilkugodzinną muzyczną podróż... Muzyka, potężne nagłośnienie, efekty i niesamowity klimat pełnowymiarowych koncertów! OD NOWA Festiwal bilety już w sprzedaży....</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="whole-card" [routerLink]="['event/detail/' + id]">
+  <div class="card">
+    <img [src]="image" alt="Event Image" class="card-image">
+    <div class="card-content">
+  <!--    <h4 class="card-title">OD NOWA FESTIWAL</h4>-->
+      <like-button></like-button>
+      <div class="card-details">
+        <p class="card-description">{{text | textRestrain:110}}</p>
+        <h2>Od {{ getLowestTicketPrice() }} zł </h2>
+        <main-button [routerLink]="['event/detail/' + id]" [text]="'Kup bilet'" [buttonClass]="'mt-1 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: flex-start; flex-direction: column; flex-wrap: wrap; max-width: 200px; min-height: 155px;
+  cursor: pointer;">
+    <h3>{{ title }}</h3>
+    <p class="date">{{ date }}</p>
+    <p class="date">{{ location }}</p>
+  </div>
+</div>

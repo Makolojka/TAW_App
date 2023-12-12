@@ -1,0 +1,107 @@
+<nav-bar></nav-bar>
+<!--Banner-->
+<div class="main">
+  <div class="banner">
+  <div class="banner-row-space">
+    <div><h1>{{ title }}</h1></div>
+    <div class="align-center-row">
+      <div class="align-center-column">
+        <i class="fa-regular fa-heart icon icon-big" data-tooltip="Polub" (click)="likeEvent()"></i>
+        <div style="margin-top: 5px">{{ likesCount }}</div>
+      </div>
+      <div class="align-center-column">
+        <i class="fa-regular fa-bell icon icon-big" data-tooltip="Obserwuj" (click)="followEvent()"></i>
+        <div style="margin-top: 5px">{{ followerCount }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="banner-row" id="about">
+    <span><i class="fas fa-calendar icon" data-tooltip="Data"></i>{{ date }}</span>
+    <span><i class="fas fa-location icon" data-tooltip="Lokalizacja"></i>{{ location }}</span>
+<!--    TODO: organizator do modelu dodać-->
+    <span><i class="fa-solid fa-user-tie icon" data-tooltip="Organizator"></i>{{ organiser }}</span>
+  </div>
+  <div class="banner-line"></div>
+</div>
+
+<!--Content-->
+  <div class="content">
+    <div class="content-left" *ngIf="!isScreenSmall">
+      <div class="side-nav">
+        <div class="card">
+          <img [src]="image" alt="Card Image">
+        </div>
+        <div class="links">
+          <ul>
+            <li (click)="scrollTo('about')"><a>O wydarzeniu</a></li>
+            <li (click)="scrollTo('tickets')"><a>Bilety</a></li>
+            <li (click)="scrollTo('additional')"><a>Dodatkowe informacje</a></li>
+            <li (click)="scrollTo('artists')"><a>Artyści</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content-right">
+      <div class="description" id="tickets">
+        <h2>O wydarzeniu</h2>
+        <p class="text">{{text}}</p>
+      </div>
+      <div class="tickets">
+        <h2>Bilety</h2>
+        <div class="ticket-items">
+          <div *ngFor="let ticket of tickets" class="ticket">
+            <div class="left-section">
+              <div class="top-section">
+                <h3>{{ ticket.type }}</h3>
+              </div>
+              <div class="bottom-section">
+                <div class="left-bottom">
+                  <p style="font-weight: 500">{{ ticket.dayOfWeek }}</p>
+                  <p>{{ ticket.date }}</p>
+                </div>
+                <div class="right-bottom">
+                  <p>{{ location }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="price">
+                <h2>Od {{ ticket.price }} zł</h2>
+              </div>
+              <div class="buy-button">
+                <!-- Use your main-button component here -->
+                 <main-button (click)="addTicket(userId, ticket._id)" [text]="'Dodaj do koszyka'" [buttonClass]="'mt-3 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End of tickets-->
+      <div class="additional-info">
+        <h2 id="additional">Dodatkowe informacje</h2>
+        <p class="text">{{ additionalText }}</p>
+      </div>
+
+      <div class="artists">
+        <h2 id="artists">Artyści</h2>
+        <div class="slider-container">
+          <div class="slider">
+            <div *ngFor="let artist of artists" class="artist-wrapper">
+              <div class="artist-circle">
+                <!-- Render artist details here, e.g., name, image, etc. -->
+                <img [src]="artist.image" alt="{{ artist.name }}" />
+              </div>
+              <h3>{{ artist.name }}</h3>
+              <button class="read-more-button" (click)="showArtistDetails('aaa')">Więcej</button>
+              <!-- You can add more details about the artist here if needed -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--End of artists-->
+
+    </div>
+    <!--End of content right-->
+  </div>
+  <!--End of content-->
+</div>

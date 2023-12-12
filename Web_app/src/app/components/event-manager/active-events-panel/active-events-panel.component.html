@@ -1,0 +1,50 @@
+<div *ngIf="panelManagerService.activeEventsVisible" class="align-center-column-image">
+  <!-- Content for Active Events -->
+  <div class="panel-div" *ngIf="!areEventsPresent">
+    <img src="././assets/img/calendar.png" alt="No events image" class="calendar-img">
+    <div class="missing-text">
+      <h4>Brak aktywnych wydarzeń</h4>
+    </div>
+    <div class="create-event-btn" (click)="panelManagerService.showEventCreation()">
+      <h4>Utwórz wydarzenie</h4>
+    </div>
+  </div>
+<div class="align-center-row-wrap">
+  <div *ngFor="let event of eventDetails" class="event">
+    <div class="button-container">
+      <i class="fa-solid fa-edit"></i>
+    </div>
+    <div class="image-container">
+      <img [src]="event.image" alt="Card Image" class="event-img">
+    </div>
+    <div class="content-top">
+      <div class="event-title-container">
+        <p style="font-size: 22px" class="event-title">{{ event.title }}</p>
+      </div>
+    </div>
+    <div class="content-bottom">
+      <div class="align-left-row-icon">
+        <i class="fa-solid fa-calendar icon"></i><p class="event-info">{{ event.date }}</p>
+      </div>
+      <div class="align-left-row-icon">
+        <i class="fa-solid fa-location-crosshairs icon"></i><p class="event-info">{{ event.location }}</p>
+      </div>
+    </div>
+
+    <div class="align-center-row" style="margin: 8px 10px; justify-content: space-between;">
+      <div class="icon-container">
+        <i class="fa-solid fa-ticket icon" style="color: var(--main-bg-color)"></i>
+        <p style="color: var(--main-bg-color)" class="event-info">{{ event.totalSoldForEvent }}</p>
+      </div>
+      <div class="icon-container">
+        <i class="fa-solid fa-eye icon" style="color: #00679f"></i>
+        <p style="color: #00679f" class="event-info">{{ event.views }}</p>
+      </div>
+      <div class="icon-container">
+        <i class="fa-solid fa-money-bill-1-wave icon" style="color: var(--secondary-variant-color)"></i>
+        <p class="event-info" style="color: var(--secondary-variant-color)">{{ event.totalEarningsForEvent  }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

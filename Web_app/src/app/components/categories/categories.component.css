@@ -1,0 +1,304 @@
+.content{
+  padding: 25px 280px;
+}
+.carousel{
+  /*padding: 0px 50px;*/
+  /*width: 100%;*/
+  /*max-width: 1200px;*/
+  /*margin: 0 auto; !* Add this line to center the element *!*/
+}
+
+.banner {
+  position: relative;
+  height: 140px;
+  background-color: #f2f2f2;
+  overflow: hidden;
+  margin-top: 70px;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.banner-text {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.content h1{
+  /*margin: 25px 60px;*/
+  font-weight: 500;
+  color: var(--third-color);
+}
+
+.events{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Music events */
+.filters{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  padding: 10px 25px 10px 25px;
+  flex-wrap: wrap;
+  /*width: 100%;*/
+  /*max-width: 1200px;*/
+  margin: 0 auto;
+  border-bottom: 1px solid #ccc;
+  /*box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);*/
+}
+
+.filter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*flex-direction: row;*/
+  /*max-width: 200px;*/
+  /*max-height: 60px;*/
+  padding: 10px 20px;
+  border: 1px solid var(--third-color);
+}
+
+.filter input[type="text"],
+.filter input[type="date"] {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.filter input[type="date"]{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.filter-icon{
+  padding: 0 10px;
+}
+
+/*Change view*/
+.change-view{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row;
+  margin: 15px 0;
+}
+.icon{
+  transform: scale(1.2);
+  color: #222;
+  margin: 10px;
+}
+
+/*Custom inputs*/
+.input-container {
+  position: relative;
+  width: 180px;
+  /*width: 300px;*/
+  margin: 5px 10px;
+}
+
+.input-label {
+  position: absolute;
+  top: 17px;
+  left: 15px;
+  pointer-events: none;
+  color: #777;
+  font-size: 16px;
+  transition: 0.2s;
+  background-color: white;
+}
+
+.input-field:focus {
+  outline: 1px solid var(--main-bg-color);
+  /*border: 1px solid var(--main-bg-color);*/
+}
+
+.input-field:focus + .input-label,
+.input-field:not(:placeholder-shown) + .input-label {
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 4px;
+}
+
+.input-field {
+  width: 180px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 16px;
+  transition: border-color 0.2s;
+  max-height: 50px;
+}
+
+.input-label {
+  position: absolute;
+  top: 12px;
+  left: 15px;
+  pointer-events: none;
+  color: #777;
+  font-size: 16px;
+  transition: 0.2s;
+  background-color: white;
+}
+
+.input-field:focus ~ .input-label,
+.input-field:not(:placeholder-shown) ~ .input-label {
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 4px;
+}
+
+/*Data picker*/
+.input-date .input-field{
+  color: var(--third-color);
+}
+
+/*Sort*/
+.sort-container{
+  display: flex;
+  justify-content: flex-end;
+  margin: 5px 0;
+}
+
+.sort-container .input-container{
+  border: none;
+}
+
+/*Select input*/
+.sort-container .input-field-form{
+  width: 260px;
+  padding: 7px 15px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 16px;
+  max-height: 50px;
+  outline: none;
+  box-shadow: none;
+}
+
+.input-field-form:focus{
+  outline: none;
+  box-shadow: none;
+  border: 1px solid var(--main-bg-color);
+  border-color: #6B3FA0;
+}
+
+.form-select option{
+  padding: 5px 10px;
+  /*margin: 5px 10px;*/
+  background-color: white;
+}
+
+.form-select:focus{
+  color: var(--third-color);
+  background-color: white;
+}
+
+.select-label{
+  position: absolute;
+  pointer-events: none;
+  color: #777;
+  transition: 0.2s;
+  top: -8px;
+  left: 10px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 4px;
+}
+
+/*Icon tooltip*/
+.icon{
+  position: relative;
+  margin-right: 8px;
+}
+
+.icon:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--main-bg-color);
+  color: white;
+  padding: 15px 20px;
+  font-size: 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  clip-path: polygon(0 20%, 100% 20%, 100% 80%, 60% 80%, 50% 100%, 40% 80%, 0 80%);
+}
+
+.icon[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+}
+
+/*Filter button*/
+.btn {
+  width: 100px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color 0.2s;
+  max-height: 50px;
+  background-color: var(--third-color);
+  color: white;
+  text-transform: uppercase;
+}
+
+.btn-container {
+  position: relative;
+  width: 100px;
+  margin: 5px 10px;
+}
+
+.empty-results{
+  display: flex;
+  justify-content: center;
+}
+
+select{
+  color: var(--third-color);
+}
+
+option{
+  font-size: 16px;
+}
+
+@media only screen and (max-width: 1300px) {
+  .content{
+    padding: 25px 200px;
+  }
+}
+@media only screen and (max-width: 1100px) {
+  .content{
+    padding: 25px 100px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .content{
+    padding: 25px 80px;
+  }
+}
+@media only screen and (max-width: 478px) {
+  .content{
+    padding: 25px 0px;
+  }
+}

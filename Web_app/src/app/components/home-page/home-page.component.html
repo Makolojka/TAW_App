@@ -1,0 +1,35 @@
+<div class="main">
+  <nav-bar></nav-bar>
+  <carousel></carousel>
+  <div class="content">
+    <event-categories></event-categories>
+    <div class="spacer"></div>
+
+    <h1>Najpopularniejsze wydarzenia</h1>
+    <latest-events [items$]="items$" *ngIf="dataLoaded"></latest-events>
+    <div class="spacer"></div>
+
+    <h1>Wydarzenia w twoim mieście</h1>
+    <div class="local">
+      <div class="align-center-row" style="display: flex; flex-wrap: wrap;">
+        <div *ngFor="let item of items$">
+          <!-- Pass the specific event's tickets array using the event ID -->
+          <event-card
+            [id]="item.id"
+            [title]="item.title"
+            [image]="item.image"
+            [text]="item.text"
+            [tickets]="ticketsMap[item.id]"
+          [date]="item.date"
+          [location]="item.location"
+          ></event-card>
+        </div>
+      </div>
+      <div class="align-center-column">
+        <button>Zobacz więcej</button>
+      </div>
+    </div>
+    <!--Content end-->
+  </div>
+  <custom-footer></custom-footer>
+</div>
