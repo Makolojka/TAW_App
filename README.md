@@ -40,7 +40,7 @@ Część kliencka dostępna jest pod adresem:
 ## Dokumentacja swagger'a.
 Szczegółowa dokumentacja API dostępna jest z poziomu interfejsu swagger.io. <br>
 <br>Po włączeniu serwera dokumentację można znaleźć pod adresem: 
-> http://localhost:3001/api-docs/#/.<br><br>
+> http://localhost:3001/api-docs/#/<br>
 > 
 > 
 ***
