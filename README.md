@@ -36,13 +36,24 @@ Część kliencka dostępna jest pod adresem:
 
 ***
 
-# Dokumentacja API
+# Dokumentacja
+Szczegółowa dokumentacja projektu(przypadki użycia, opis architektury, erd) dostępna jest w pliku [Dokumentacja.pdf](./images/Dokumentacja.pdf)
+
+## Diagram ERD
+<kbd> <img src="./images/ERD.png" /> </kbd>
+
+## Dokumentacja API
 Szczegółowa dokumentacja API dostępna jest z poziomu interfejsu swagger.io. <br>
 <br>Po włączeniu serwera dokumentację można znaleźć pod adresem: 
 > http://localhost:3001/api-docs/#/<br>
 > 
 > 
 ***
+<kbd> <img src="./images/api1.png" /> </kbd>
+<kbd> <img src="./images/api2.png" /> </kbd>
+<kbd> <img src="./images/api3.png" /> </kbd>
+<kbd> <img src="./images/api4.png" /> </kbd>
+<kbd> <img src="./images/schemas.png" /> </kbd>
 
 # Technologie użyte w projekcie
 - node.js
