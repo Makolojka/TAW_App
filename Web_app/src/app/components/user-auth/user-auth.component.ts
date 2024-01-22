@@ -53,6 +53,7 @@ export class UserAuthComponent implements OnInit{
       this.isFormSubmitted = true;
       return false;
     }
+    this.isFormSubmitted = false;
     return true;
   }
 
@@ -82,6 +83,7 @@ export class UserAuthComponent implements OnInit{
         }
       );
     }
+    this.openSnackBarError("Błędny formularz");
     return;
   }
 

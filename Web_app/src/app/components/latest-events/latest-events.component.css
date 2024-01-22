@@ -2,7 +2,7 @@
   padding: 0px 50px;
   width: 100%;
   max-width: 1200px;
-  margin: 0 auto; /* Add this line to center the element */
+  margin: 0 auto;
 }
 .popular
 {
@@ -16,7 +16,6 @@
 .button-style
 {
   color: var(--secondary-color);
-  /*background-color: var(--main-bg-color);*/
   border: none;
 }
 
@@ -24,24 +23,3 @@ h1{
   color: var(--third-color);
   font-weight: 500;
 }
-/*.slider-container {*/
-/*  overflow: hidden;*/
-/*  width: 100%;*/
-/*  position: relative;*/
-/*}*/
-
-/*.slider-wrapper {*/
-/*  display: flex;*/
-/*  transition: transform 0.4s ease-in-out;*/
-/*}*/
-
-/*.slider {*/
-/*  display: flex;*/
-/*  width: fit-content;*/
-/*}*/
-
-/*.card {*/
-/*  flex: 0 0 auto;*/
-/*  margin: 0 10px;*/
-/*  box-shadow: none;*/
-/*}*/

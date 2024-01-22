@@ -1,10 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ViewportScroller} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {DataService} from "../../services/data.service";
 import {AuthService} from "../../services/auth.service";
-import {Ticket} from "../event-card/Ticket";
-import {Artist} from "../../interfaces/artist";
 @Component({
   selector: 'liked',
   templateUrl: './liked.component.html',
@@ -21,7 +18,6 @@ export class LikedComponent implements OnInit{
     this.userId = this.authService.getUserId();
     this.service.getUserLikedOrFollowedEvents(this.userId, 'like').subscribe((response) => {
       this.items$ = response;
-      // console.log("this.items$.length"+this.items$.length)
       if(this.items$.length>0){
         this.isItemsEmpty = false;
       }
@@ -33,7 +29,6 @@ export class LikedComponent implements OnInit{
 
   // TODO: zabezpieczenie, co jak nie wykona się jedna z metod?
   likeEvent(eventId: string){
-    // console.log("this.userId: "+this.userId+"  this.id: "+eventId+" for likedEvents")
     if(this.userId && eventId)
     {
       this.service.addUserLikeOrFollower(this.userId, eventId, 'likedEvents').subscribe(

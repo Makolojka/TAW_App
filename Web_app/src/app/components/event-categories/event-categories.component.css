@@ -88,10 +88,6 @@ h1 {
 
 .cat-name-all {
   margin: 5px;
-  /*flex-grow: 1;*/
-  /*white-space: nowrap;*/
-  /*overflow: hidden;*/
-  /*text-overflow: ellipsis;*/
 }
 
 .cat-button:hover {

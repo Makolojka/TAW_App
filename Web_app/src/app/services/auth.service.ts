@@ -53,6 +53,11 @@ export class AuthService {
     return this.http.post(this.url + '/user/create', credentials);
   }
 
+  updateUserDetails(credentials: any) {
+    console.log(credentials)
+    return this.http.post(this.url + '/user/update', credentials);
+  }
+
   logout() {
     return this.http.delete(this.url + '/user/logout/' + this.currentUser.userId)
       .pipe(

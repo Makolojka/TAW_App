@@ -1,4 +1,3 @@
 <div class="main">
-<!--  <h1>Najpopularniejsze wydarzenia</h1>-->
-  <multi-item-carousel [items]="items$"></multi-item-carousel>
+  <multi-item-carousel *ngIf="items" [ticketsMap]="ticketsMap" [items]="items" [topFiveEvents]="topFiveEvents"></multi-item-carousel>
 </div>

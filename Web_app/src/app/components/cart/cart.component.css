@@ -278,6 +278,26 @@
 /*  border-top: 1px solid #ccc;*/
 /*}*/
 
+.chosen-seats{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: 5px;
+  border-top: 1px solid #ddd;
+  padding: 5px;
+  width: 100%
+}
+
+.expired-item {
+  color: #C7C7C7;
+}
+
+.expired-btn {
+  background-color: #DDDDDD;
+  pointer-events: none;
+}
+
 /*Small screens*/
 @media screen and (max-width: 1100px) {
   .btn-wishlist {

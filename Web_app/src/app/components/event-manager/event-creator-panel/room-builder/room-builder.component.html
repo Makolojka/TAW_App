@@ -1,0 +1,74 @@
+<div class="schema-manager">
+  <h3 class="schema-h3">Podaj ilość miejsc w jednym rzędzie:</h3>
+  <input type="number" placeholder="Ilość miejsc" [(ngModel)]="roomColumns">
+
+<!--  <label class="schema-h3">Styl rzędu:</label>-->
+<!--  <input type="text" id="rowStyle" [(ngModel)]="selectedRowStyle">-->
+
+  <h3 class="schema-h3">Wybierz układ:</h3>
+  <div class="categories">
+    <div class="category-tile"
+         [class.alignment-tile]="!isAlignmentSelected('flex-start')"
+         [class.alignment-tile-activated]="isAlignmentSelected('flex-start')"
+         (click)="toggleAlignment('flex-start')">
+      <span style="text-align: left">Wyrównaj do lewej</span>
+    </div>
+
+    <div class="category-tile"
+         [class.alignment-tile]="!isAlignmentSelected('center')"
+         [class.alignment-tile-activated]="isAlignmentSelected('center')"
+         (click)="toggleAlignment('center')">
+      <span style="text-align: center">Wyśrodkuj</span>
+    </div>
+
+    <div class="category-tile"
+         [class.alignment-tile]="!isAlignmentSelected('flex-end')"
+         [class.alignment-tile-activated]="isAlignmentSelected('flex-end')"
+         (click)="toggleAlignment('flex-end')">
+      <span style="text-align: right">Wyrównaj do prawej</span>
+    </div>
+  </div>
+
+  <h3 class="schema-h3">Dostępne akcje:</h3>
+  <div class="add-row-button-container">
+    <button (click)="addRow()">Dodaj rząd</button>
+    <button class="btn-delete" (click)="removeRow()">Usuń rząd</button>
+  </div>
+
+  <div class="cinema-schema-container">
+    <div class="cinema-schema-main" *ngIf="roomSchema.length !==0">
+      <div class="cinema-screen-container">
+        <div class="cinema-screen">
+          <h3 style="padding: 20px 0 0 0">Ekran</h3>
+          <h4>Sala 1</h4>
+        </div>
+      </div>
+      <div class="room-schema" [ngStyle]="{ 'align-items': roomSchemaStyle}">
+        <div *ngFor="let row of roomSchema; let i = index" class="room-row">
+          <div class="align-row">
+            <div *ngFor="let seat of row.seats; let j = index" class="seat"
+                 [ngStyle]="{ 'background-color': seat.color}"
+                 (click)="toggleSeatAvailability(i, j)">
+              {{ i + 1 }}.{{ j + 1 }}.
+            </div>
+            <button (click)="applyTicketToRow(i)" class="apply-ticket-button">Zmień typ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend-container" *ngIf="roomSchema.length !==0">
+      <h3>Legenda</h3>
+      <div class="align-center-row">
+        <div class="" *ngIf="tickets.length == 0">
+          <h4>Brak biletów. Utwórz bilety w kroku "Dodaj bilety".</h4>
+        </div>
+        <div class="zone-button" *ngFor="let ticket of tickets; let i = index" [ngStyle]="getBackgroundColor(i)" (click)="selectTicket(ticket)">
+          <h4>{{ ticket.type }}</h4>
+          <h5>{{ ticket.price }} zł</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End of cinema schema container-->
+</div>

@@ -1,0 +1,95 @@
+.transaction-details {
+  max-width: 100%;
+  margin: 70px auto;
+  padding: 20px 120px;
+  font-family: Arial, sans-serif;
+}
+
+.transaction-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.transaction-details th,
+.transaction-details td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.transaction-details th {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--main-background);
+  text-align: left;
+  background-color: var(--third-color);
+}
+
+.wishlist-item-name,
+.wishlist-item-price,
+.wishlist-item-availability,
+.wishlist-item-actions {
+  text-align: center;
+}
+
+.wishlist-item-name {
+  text-align: left;
+}
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+.row-space{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button-pdf{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid var(--main-bg-color);
+  height: 25px;
+  padding: 15px 25px;
+  margin: 5px 0 10px 0;
+  background-color: var(--main-bg-color);
+  color: var(--main-background);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button-pdf:hover{
+  border: 1px solid var(--red-color);
+  background-color: var(--red-color);
+  transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 768px) {
+  .wishlist {
+    margin: 100px 20px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .wishlist {
+    margin: 100px 40px;
+    padding: 0 20px;
+  }
+}
+

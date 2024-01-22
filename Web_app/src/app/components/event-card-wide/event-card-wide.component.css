@@ -2,7 +2,6 @@
 .wide-card {
   display: flex;
   align-items: center;
-  /*border-bottom: 1px solid #ccc;*/
   border-radius: 0px;
   padding: 10px;
   width: 100%;
@@ -35,24 +34,24 @@
 
   /* Image container */
 .image-container {
-  flex: 0 0 20%; /* Adjust the width of the image container */
+  flex: 0 0 20%;
   max-width: 200px;
   min-width: 100px;
   padding-right: 10px;
   object-fit: cover;
-  height: 100%; /* Set the height to 100% to fill the container vertically */
+  height: 100%;
 }
 
 /* Image style */
 .image-container img {
   width: 100%;
-  height: 100%; /* Ensure the image takes the full height of the container */
-  object-fit: cover; /* Maintain the image aspect ratio and cover the container */
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Content section */
 .content {
-  flex: 1; /* Allow the content section to grow and take remaining space */
+  flex: 1;
 }
 
 /* Top and Bottom section container (Row) */
@@ -103,7 +102,7 @@
 /* Short description */
 .short-description {
   font-size: 12px;
-  color: #777; /* Greyed out color */
+  color: #777;
   border-top: 1px solid #ccc;
   padding: 5px 5px;
   transition: all 0.5s ease-in-out;
@@ -123,7 +122,6 @@
     margin: 25px 0 25px 0;
     padding: 10px 0;
     box-shadow: 0px 0px 8px 0px rgba(66, 68, 90, 0.4);
-    /* Other styles... */
   }
 
   .wide-card:hover {
@@ -149,10 +147,8 @@
   /* Image container */
   .image-container {
     width: 100%;
-    /*max-width: 200px;*/
-    height: 50px; /* Set a fixed height for the image container */
-    margin: 0 auto; /* Center the image horizontally */
-    /*overflow: hidden; !* Hide any overflowing content *!*/
+    height: 50px;
+    margin: 0 auto;
   }
 
   /* Image style */
@@ -167,14 +163,14 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Add space between top and bottom sections */
-    padding: 10px; /* Add padding to the content */
+    justify-content: space-between;
+    padding: 10px;
   }
 
   /* Top and Bottom section container (Row) */
   .top-bottom-container {
     display: flex;
-    flex-direction: column; /* Change direction to column for smaller screens */
+    flex-direction: column;
   }
 
   /* Top section */
@@ -185,7 +181,7 @@
   /* Bottom section */
   .bottom-section {
     display: flex;
-    justify-content: space-between; /* Add space between price and button */
+    justify-content: space-between;
   }
 
   /* Price */
@@ -210,14 +206,14 @@
   .short-description {
     min-height: 250px;
     font-size: 12px;
-    color: #777; /* Greyed out color */
+    color: #777;
     border-top: 1px solid #ccc;
     padding: 5px 5px;
     transition: all 0.5s ease-in-out;
   }
 
   .bottom-section {
-    display: none /* Adjust the spacing between the title and the Buy Ticket button */
+    display: none
   }
   .btn-small-screen{
     display: flex;

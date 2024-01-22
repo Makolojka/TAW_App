@@ -1,0 +1,297 @@
+/* Styles for cinema schema */
+.cinema-schema-container{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  border-top: 1px solid #ddd;
+  padding: 20px 0 0 0;
+}
+
+.schema-manager{
+  border: 1px solid #ddd;
+  padding: 0 20px;
+}
+
+.cinema-schema {
+  margin-top: 10px;
+  /*border: 1px solid #ccc;*/
+  padding: 10px;
+}
+
+/* Style for room rows */
+.room-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+/* Style for individual sits */
+.seat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50px;
+  max-height: 50px;
+  min-width: 35px;
+  min-height: 35px;
+  background-color: #ddd;
+  border: 1px solid #aaa;
+  border-radius: 10px 10px 0 0;
+  margin: 0 5px;
+}
+
+
+.left{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.right{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.schema-h3{
+  font-size: 18px;
+  margin: 10px 0 0 0;
+  color: var(--third-color-op);
+}
+
+.categories{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  max-width: 1200px;
+}
+
+.category-tile{
+  text-align: center;
+}
+
+.cinema-schema-container .categories{
+  margin: 10px 0 20px 0;
+}
+
+.add-row-button-container{
+  /*width: 100%;*/
+  margin: 10px 0 20px 0;
+}
+.add-row-button-container button{
+  /*width: 100%;*/
+}
+
+.alignment-tile{
+  border: 1px solid var(--third-color-greyed);
+  color: var(--third-color-greyed);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.alignment-tile:hover{
+  border: 1px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  scale: 1.1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.alignment-tile-activated{
+  border: 1px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.alignment-tile-activated:hover{
+  cursor: pointer;
+}
+
+/*Cinema screen*/
+.cinema-builder{
+  min-width: 100%;
+  max-width: 1200px;
+}
+
+.cinema-schema-container{
+}
+
+.cinema-screen-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  height: auto;
+}
+
+.cinema-screen {
+  width: 60%;
+  margin: 0 0 20px 0;
+  background-color: transparent;
+  border: 2px solid var(--third-color-op);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--third-color-op);
+}
+
+.cinema-screen h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.cinema-screen h4 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.cinema-schema-main{
+}
+
+.legend-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0 20px;
+}
+
+.legend-container h3{
+  padding: 20px 0 0 0;
+  color: var(--third-color);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.zone-button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  padding: 5px 10px;
+  margin: 0 10px 20px 10px;
+  border-radius: 5px;
+  color: white;
+  border: 1px solid var(--third-color-greyed);
+  transition: all 0.5s ease;
+}
+.zone-button:hover{
+  border:1px solid var(--main-bg-color);
+  scale: 1.1;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.zone-button h4{
+  font-size: 14px;
+  margin: 0;
+}
+
+.zone-button h5{
+  margin: 0;
+}
+
+.btn-delete{
+  background-color: var(--red-color);
+  margin: 0 0 0 20px;
+}
+
+.btn-delete:hover{
+  background-color: var(--red-color-hover-dark);
+}
+
+.btn-apply{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 0 0 20px;
+}
+
+.row-actions button span{
+  font-size: 12px;
+}
+
+
+/*Buttons*/
+input {
+  background-color: transparent;
+  /*border: none;*/
+  padding: 15px 20px;
+  margin: 8px 0;
+  width: 100%;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  /*border: 1px solid #ccc;*/
+  border: none;
+  border-bottom: 1px solid #ccc;
+  /*border-top-right-radius: 10px;*/
+  /*border-bottom-left-radius: 10px;*/
+}
+input:focus
+{
+  outline: none;
+  border-bottom: 1px solid var(--third-color);
+  transition: all 0.2s ease;
+}
+
+button {
+  border-radius: 0px;
+  border: 1px solid var(--main-bg-color);
+  background-color: var(--main-bg-color);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+button:hover{
+  border: 1px solid var(--third-color);
+  background-color: var(--third-color);
+  transition: all 0.3s ease-in-out;
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+
+.apply-ticket-button{
+  margin-left: 15px;
+}
+
+.align-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.room-schema{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}

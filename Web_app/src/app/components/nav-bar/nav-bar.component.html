@@ -1,197 +1,103 @@
-<!-- Navbar -->
-<nav class="navbar fixed-top navbar-expand-lg bg-light shadow">
-  <!-- Container wrapper -->
-  <div class="container-fluid navbar-container">
-    <!-- Toggle button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i class="fas fa-bars"></i>
-    </button>
+<div class="fixed-top">
+  <div id="menuHolder">
+    <div role="navigation" class="sticky-top border-bottom border-top shadow" id="mainNavigation">
+      <div class="flexMain">
+        <div class="flex2" *ngIf="!isMenuToggled">
+          <button class="whiteLink siteLink" style="border-right:1px solid #eaeaea" (click)="menuToggle()">
+            <i class="fas fa-bars me-2"></i> MENU</button>
+          <button *ngIf="!authService.isOrganizer()" class="whiteLink siteLink" [routerLink]="['/organizer/overview']">Jesteś organizatorem?</button>
+          <button *ngIf="authService.isOrganizer()" class="whiteLink siteLink" [routerLink]="['/event-manager']">
+            <i class="fa-solid fa-solar-panel me-0" style="font-size: 18px"></i>
+          </button>
+        </div>
+        <div class="flex3 text-center" id="siteBrand">
+          <img [routerLink]="'/'"
+            src="./assets/log.png"
+            height="45"
+            alt="BiletSfera"
+            loading="lazy"
+          />
+        </div>
 
-    <!-- Collapsible wrapper -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Navbar brand -->
-      <a class="navbar-brand mt-2 mt-lg-0" href="#">
-        <img
-          src="./assets/log.png"
-          height="40"
-          alt="BiletSfera"
-          loading="lazy"
-        />
-      </a>
-      <!-- Left links -->
-      <div class="container-fluid">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <div class="nav-item">
-            <a class="nav-link" [routerLink]="['/organizer/overview']">Jesteś organizatorem?</a>
-          </div>
-        </ul>
-<!--        <form class="d-flex input-group w-50">-->
-<!--          <input-->
-<!--            type="search"-->
-<!--            class="form-control rounded"-->
-<!--            placeholder="Search"-->
-<!--            aria-label="Search"-->
-<!--            aria-describedby="search-addon"-->
-<!--          />-->
-<!--          <span class="input-group-text text-white border-0" id="search-addon">-->
-<!--            <i class="fas fa-search fa-lg" style="color: var(&#45;&#45;third-color)"></i>-->
-<!--          </span>-->
-<!--        </form>-->
-      </div>
-      <!-- Left links -->
-    </div>
-    <!-- Collapsible wrapper -->
-
-    <!-- Right elements -->
-    <div class="d-flex align-items-center">
-      <!-- Likes -->
-      <div class="position-relative me-5" *ngIf="authService.isLoggedIn()">
-        <a [routerLink]="['/wishlist']">
-<!--        <i class="fas fa-heart fa-lg icon"></i>-->
-        <i class="fa-solid fa-bell fa-lg icon"></i>
-        <span class="badge rounded-pill badge-notification icon-bg">{{ followedCount }}</span>
-      </a>
-      </div>
-
-      <!-- Tickets icon -->
-      <div class="position-relative me-5" style="cursor: pointer;">
-        <a id="ticketIcon" class="text-reset me-3 ticket-icon" (click)="toggleSidebar()">
-          <i class="fas fa-ticket fa-lg icon"></i>
-          <span class="badge rounded-pill badge-notification icon-bg">{{ ticketCount }}</span>
-        </a>
-      </div>
-
-    <!--  Sidebar  -->
-      <div [ngClass]="{'show': isSidebarVisible}" id="ticketSidebar" class="sidebar position-fixed bg-light">
-        <div class="sidebar-content">
-          <div class="close-icon" (click)="toggleSidebar()">
-            <i class="fas fa-times fa-lg"></i>
-          </div>
-          <h2>Twoje bilety</h2>
-          <ul>
-            <li *ngFor="let cartItem of cartData?.cart">
-              <div class="menu-item">
-                <div class="left-section">
-                  <div class="title">{{ cartItem.event.title }}</div>
-                  <p class="date">Date: <span>{{ cartItem.event.date }}</span></p>
-                  <p class="location">Location: <span>{{ cartItem.event.location }}</span></p>
-                </div>
-                <div class="right-section">
-                  <button class="btn minus-btn" (click)="removeTicketFromCart(cartItem.event._id, cartItem.tickets[0]._id)"><i class="fas fa-minus"></i></button>
-                  <div class="counter">{{ cartItem.tickets[0].quantity }}</div>
-                  <button class="btn plus-btn" (click)="addTicketToCart(cartItem.event._id, cartItem.tickets[0]._id)"><i class="fas fa-plus"></i></button>
-                </div>
-              </div>
-            </li>
-          </ul>
-
-          <!--Bottom section-->
-          <div class="bottom-section">
-            <div class="cart-summary">
-              <span class="label">Suma:</span>
-              <span class="price">{{ getTotalSum() }} zł</span>
+        <div class="flex2 text-end d-block d-md-none">
+        </div>
+        <div class="flex2 text-end d-none d-md-block">
+          <button class="whiteLink siteLink" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']" [queryParams]="{ register: true }">Zarejestruj się</button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/cart']">
+            <div class="position-relative">
+              <i class="fa-solid fa-ticket me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ ticketCount }}
+              </span>
             </div>
-            <button class="sidebar-btn" [routerLink]="['/cart']">Koszyk</button>
-            <button class="sidebar-btn-var">Kup bilety</button>
+          </button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/liked']">
+            <div class="position-relative">
+              <i class="fa-solid fa-heart me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ likedCount }}
+              </span>
+            </div>
+          </button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/wishlist']">
+            <div class="position-relative">
+              <i class="fa-solid fa-bell me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ followedCount }}
+              </span>
+            </div>
+          </button>
+          <button class="blackLink siteLink" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']">Zaloguj się</button>
+
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" (click)="signOut()">
+            <i class="fa-solid fa-right-from-bracket" style="font-size: 18px"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="menuDrawer">
+      <div class="p-4 border-bottom">
+        <div class='row'>
+          <div class="col">
+            <span class="menu-span">Menu</span>
+          </div>
+          <div class="col text-end ">
+            <i class="fas fa-times" role="btn" (click)="menuToggle()"></i>
           </div>
         </div>
       </div>
+      <div>
+        <a class="nav-menu-item" [routerLink]="'/'"><i class="fa-solid fa-house me-3"></i>Wydarzenia</a>
 
-      <div class="backdrop" [ngClass]="{'show': isSidebarVisible}" (click)="toggleSidebar()"></div>
+        <a class="nav-menu-item" *ngIf="!authService.isLoggedIn()"
+           [routerLink]="['/login']" [queryParams]="{ register: true }"><i class="fa-solid fa-user-plus me-3"></i>Zarejestruj się</a>
 
-      <!-- Profil -->
-      <div class="dropdown" (window:resize)="onWindowResize()">
-        <a
-          class="dropdown-toggle d-flex align-items-center hidden-arrow"
-          id="navbarDropdownMenuAvatar"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-          (click)="toggleDropdown()"
-        >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            class="rounded-circle"
-            height="40"
-            alt="Avatar Image"
-            loading="lazy"
-          />
-        </a>
-        <ul
-          class="dropdown-menu dropdown-menu-end dropdown-menu-start ml-4 rounded-0"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <li><h5 class="dropdown-header mb-0 text">Główne</h5></li>
-          <li>
-            <a class="dropdown-item" [routerLink]="'/events'">Wydarzenia</a>
-          </li>
-          <li *ngIf="authService.isOrganizer()">
-            <a class="dropdown-item" [routerLink]="'/event-manager'">Panel organizatora</a>
-          </li>
-          <li><h5 class="dropdown-header mb-0 text">Moje</h5></li>
-          <li>
-            <a class="dropdown-item" [routerLink]="['/cart']">Koszyk({{ ticketCount }})</a>
-          </li>
-          <li *ngIf="authService.isLoggedIn()">
-            <a class="dropdown-item" [routerLink]="['/wishlist']">Obserwowane({{ followedCount }})</a>
-          </li>
-          <li *ngIf="authService.isLoggedIn()">
-            <a class="dropdown-item" [routerLink]="['/liked']">Polubione({{ likedCount }})</a>
-          </li>
-          <li><h5 class="dropdown-header mb-0 text">Opcje</h5></li>
-          <li *ngIf="!authService.isLoggedIn()">
-            <a class="dropdown-item" [routerLink]="['/login']">Zaloguj się</a>
-          </li>
-          <li *ngIf="!authService.isLoggedIn()">
-            <a class="dropdown-item" [routerLink]="['/login']" [queryParams]="{ register: true }">Zarejestruj się</a>
-          </li>
-          <li *ngIf="authService.isLoggedIn()">
-            <a class="dropdown-item" (click)="signOut()" style="cursor: pointer">Wyloguj się</a>
-          </li>
-        </ul>
+        <a class="nav-menu-item" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']">
+          <i class="fa-solid fa-right-to-bracket me-3"></i>Zaloguj się</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isOrganizer()"
+           [routerLink]="'/event-manager'"><i class="fa-solid fa-solar-panel me-3"></i>Panel organizatora</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/cart']"><i class="fa-solid fa-basket-shopping me-3"></i>Koszyk({{ ticketCount }})</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/user-details']"><i class="fa-solid fa-address-card me-3"></i>Dane konta</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/transactions']"><i class="fa-solid fa-ticket me-3"></i>Transakcje</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/wishlist']"><i class="fa-solid fa-bell me-3"></i>Obserwowane</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/liked']"><i class="fa-solid fa-heart me-3"></i>Polubione</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()" (click)="signOut()">
+          <i class="fa-solid fa-right-from-bracket me-3"></i>Wyloguj się</a>
       </div>
     </div>
-    <!-- Right elements -->
   </div>
-  <div id="dropdown2" class="dropdown2" [ngClass]="{'show': isDropdownVisible}">
-    <ul
-      class="align-center-column"
-    >
-      <div class="align-center-row">
-        <li>
-          <a [routerLink]="'/events'">Wydarzenia</a>
-        </li>
-        <li>
-          <a [routerLink]="['/cart']">Koszyk({{ ticketCount }})</a>
-        </li>
-        <li *ngIf="authService.isLoggedIn()">
-          <a [routerLink]="['/liked']" >Polubienia(0)</a>
-        </li>
-        <li *ngIf="authService.isLoggedIn()" >
-          <a [routerLink]="['/wishlist']">Obserwowane(0)</a>
-        </li>
-        <li *ngIf="!authService.isLoggedIn()" >
-          <a [routerLink]="['/login']">Zaloguj się</a>
-        </li>
-        <li *ngIf="!authService.isLoggedIn()">
-          <a [routerLink]="['/login']" [queryParams]="{ register: true }">Zarejestruj się</a>
-        </li>
-        <li *ngIf="authService.isLoggedIn()" (click)="signOut()">
-          <a style="cursor: pointer">Wyloguj się</a>
-        </li>
-      </div>
-    </ul>
-  </div>
-  <!-- Container wrapper -->
-</nav>
-<!-- Navbar -->
-
-
+</div>

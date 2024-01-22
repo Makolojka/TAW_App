@@ -1,0 +1,90 @@
+.user-details {
+  max-width: 1200px;
+  margin: 120px auto 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+button {
+  background-color: var(--third-color-hover);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--third-color);
+}
+
+
+/*Preferences*/
+.preferences{
+  border-top: 1px solid #ddd;
+  padding: 20px 0;
+}
+
+.categories{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  /*align-self: flex-start;*/
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0 0 20px 0;
+}
+
+.category-tile{
+  border: 1px solid var(--third-color-greyed);
+  color: var(--third-color-greyed);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.category-tile:hover{
+  border: 1px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  scale: 1.1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.category-tile-activated{
+  border: 1px solid var(--main-bg-color);
+  color: var(--main-bg-color);
+  padding: 5px 20px;
+  min-width: 160px;
+  margin: 5px 10px;
+  transition: all 0.3s ease;
+}
+
+.category-tile-activated:hover{
+  cursor: pointer;
+}

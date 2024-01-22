@@ -139,82 +139,7 @@
     <!--Cinema schema builder-->
         <div *ngIf="isCategorySelected('Kino')" class="cinema-builder">
           <h2>Kreator schematu kina</h2>
-          <div class="schema-manager">
-            <h3 class="schema-h3">Podaj ilość miejsc w jednym rzędzie:</h3>
-            <!--<input type="number" placeholder="Rows" [(ngModel)]="roomRows">-->
-            <input type="number" placeholder="Ilość miejsc" [(ngModel)]="roomColumns" (ngModelChange)="onChange($event)">
-
-
-            <h3 class="schema-h3">Wybierz układ:</h3>
-            <div class="categories">
-              <div class="category-tile"
-                   [class.alignment-tile]="!isAlignmentSelected('left')"
-                   [class.alignment-tile-activated]="isAlignmentSelected('left')"
-                   (click)="toggleAlignment('left')">
-                <span style="text-align: left">Wyrównaj do lewej</span>
-              </div>
-
-              <div class="category-tile"
-                   [class.alignment-tile]="!isAlignmentSelected('center')"
-                   [class.alignment-tile-activated]="isAlignmentSelected('center')"
-                   (click)="toggleAlignment('center')">
-                <span style="text-align: center">Wyśrodkuj</span>
-              </div>
-
-              <div class="category-tile"
-                   [class.alignment-tile]="!isAlignmentSelected('right')"
-                   [class.alignment-tile-activated]="isAlignmentSelected('right')"
-                   (click)="toggleAlignment('right')">
-                <span style="text-align: right">Wyrównaj do prawej</span>
-              </div>
-            </div>
-
-            <h3 class="schema-h3">Dostępne akcje:</h3>
-            <div class="add-row-button-container">
-              <button (click)="addRoomSchema(roomRows, roomColumns)">Dodaj rząd</button>
-              <button class="btn-delete" (click)="removeLastRow()">Usuń rząd</button>
-            </div>
-
-            <div class="cinema-schema-container">
-              <div class="cinema-schema-main" *ngIf="cinemaSchema.length !==0">
-                <div class="cinema-screen-container">
-                  <div class="cinema-screen">
-                    <h3 style="padding: 20px 0 0 0">Ekran</h3>
-                    <h4>Sala 1</h4>
-                  </div>
-                </div>
-                <div *ngFor="let room of cinemaSchema; let roomIndex = index" class="cinema-schema" [ngClass]="selectedAlignment">
-                  <div *ngFor="let row of getNumberArray(room.rows); let rowIndex = index" class="room-row">
-                    <div *ngFor="let column of getNumberArray(room.columns); let columnIndex = index" class="sit"
-                         (click)="applyColorToSeat(roomIndex, rowIndex, columnIndex, selectedTicket?.type ?? 'default')"
-                         [ngStyle]="{ 'background-color': getSeatColor(roomIndex, rowIndex, columnIndex) }">
-                      <span>{{ getSeatNumber(room, row, column) }}</span>
-                    </div>
-                    <div class="row-actions">
-                      <button class="btn-apply" (click)="applyColorToRow(roomIndex, rowIndex, selectedTicket?.type ?? 'default')">
-                        <span>Zastosuj kolor</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="legend-container" *ngIf="cinemaSchema.length !==0">
-                <h3>Legenda</h3>
-                <div class="align-center-row">
-                  <div class="" *ngIf="tickets.length == 0">
-                    <h4>Brak biletów. Utwórz bilety w kroku "Dodaj bilety".</h4>
-                  </div>
-                  <div class="zone-button" *ngFor="let ticket of tickets; let i = index" [ngStyle]="getBackgroundColor(i)" (click)="selectTicket(ticket)">
-                    <h4>{{ ticket.type }}</h4>
-                    <h5>{{ ticket.price }} zł</h5>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <!--End of cinema schema container-->
-          </div>
+          <room-builder [tickets]="this.tickets" [roomSchema]="roomSchema" [roomSchemaStyle]="this.roomSchemaStyle"></room-builder>
         </div>
         <!--End of cinema schema builder-->
 
@@ -287,7 +212,7 @@
           </div>
 
           <div class="input-container input-date">
-            <input type="time" class="input-field" id="startDateTime" name="endDate" [(ngModel)]="startDateTime">
+            <input type="time" class="input-field" id="startDateTime" name="startDateTime" [(ngModel)]="startDateTime">
             <label for="startDateTime" class="input-label">o godzinie (opcjonalne)</label>
           </div>
 
@@ -297,12 +222,14 @@
           </div>
 
           <div class="input-container input-date">
-            <input type="time" class="input-field" id="endDateTime" name="endDate" [(ngModel)]="endDateTime">
+            <input type="time" class="input-field" id="endDateTime" name="endDateTime" [(ngModel)]="endDateTime">
             <label for="endDateTime" class="input-label">o godzinie (opcjonalne)</label>
           </div>
         </div>
         <div class="align-center-column">
-          <div *ngIf="isEventFormSubmitted && Object.prototype.toString.call(startDate) === '[object Date]'" class="error">Pole start wydarzenia nie może być puste.</div>
+          <div *ngIf="isEventFormSubmitted && !isStartDate" class="error">
+            Pole start wydarzenia nie może być puste.
+          </div>
         </div>
 
         <div class="next-btn" (click)="toggleCreatorPanel('location')">
@@ -408,7 +335,7 @@
             </div>
           </div>
           <div class="section">
-            <span>{{ 0 }} Bilet(ów)</span>
+            <span>{{ ticket.maxNumberOfTickets }} Bilet(ów)</span>
           <!-- TODO: <span>{{ ticket.quantity }} Bilet(ów)</span>-->
           </div>
           <div class="section">
@@ -443,7 +370,6 @@
         <h2>Dodaj artystów z bazy dostępnych artystów</h2>
 
         <div class="artists">
-          <!--          <h2 id="artists">Artyści bioracy udział w wydarzeniu</h2>-->
           <div class="slider-container">
             <div class="slider">
               <!--Artist circle-->
@@ -506,7 +432,7 @@
         </a>
       </div>
       <div class="modal-search-bar">
-        <input type="text" class="search-input" placeholder="Wyszukaj artystę, np. Tede">
+        <input type="text" class="search-input" placeholder="Wyszukaj artystę, np. Tede" [(ngModel)]="searchQuery">
         <div class="search-div">
           <i class="fa-solid fa-search"></i>
         </div>
@@ -515,7 +441,7 @@
         <div class="form-container sign-in-container">
           <!--Artist circle-->
           <div class="artist-container">
-            <div class="align-left-row" *ngFor="let artist of artists">
+            <div class="align-left-row" *ngFor="let artist of filteredArtists">
               <div class="artist-wrapper">
                 <div class="artist-circle">
                   <img [src]="artist.image" alt="Artist Image">
@@ -532,7 +458,6 @@
       </div>
       <div class="modal-footer">
         <a class="logo" [routerLink]="['/']" style="margin: 10px 0"><img src="assets/log.png" style="transform: scale(1.5); margin: 0"></a>
-        <!--        <button type="button" class="btn">Dodaj artystę</button>-->
       </div>
     </div>
   </div>
@@ -557,7 +482,6 @@
             <input type="text" placeholder="Url " name="image" [(ngModel)]="newArtist.image" required>
             <div *ngIf="isFormSubmitted && !newArtist.image" class="error-modal">Pole nie może być puste.</div>
 
-            <!--            <input type="text" placeholder="Krótki opis artysty (np. )" name="shortDescription" [(ngModel)]="newArtist.shortDescription" required>-->
             <textarea
               class="textarea-modal"
               placeholder="Krótki opis artysty (np. )"
@@ -579,8 +503,7 @@
               rows="1"
               required
             ></textarea>
-            <!--            <input type="text" placeholder="Opis kariery artysty (opcjonalne)" name="career" [(ngModel)]="newArtist.career">-->
-          </form>
+            </form>
         </div>
       </div>
       <div class="modal-footer">

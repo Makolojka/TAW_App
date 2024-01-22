@@ -85,7 +85,6 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <!--          <h5 class="modal-title">Zaloguj się</h5>-->
           <a class="logo" [routerLink]="['/']"><img src="assets/log.png"></a>
           <a class="close" (click)="closeModal('loginModal')" data-dismiss="modal" aria-label="Close">
             <i class="fa-solid fa-close icon"></i>
@@ -103,12 +102,10 @@
               <input type="password" placeholder="Hasło" [(ngModel)]="signInCredentials.password" name="password" title="Password">
               <div *ngIf="isFormSubmitted && !signInCredentials.password" class="error">Pole nie może być puste.</div>
               <a href="#">Zapomniałeś hasła?</a>
-              <!--              <button (click)="signIn()">Zaloguj się</button>-->
             </form>
           </div>
         </div>
         <div class="modal-footer">
-          <!--          <button type="button" class="btn" (click)="closeLoginModal()" data-dismiss="modal">Zamknij</button>-->
           <button type="button" class="btn" (click)="signIn()" >Zaloguj się</button>
         </div>
       </div>
@@ -153,7 +150,6 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!--          <button type="button" class="btn" (click)="closeLoginModal()" data-dismiss="modal">Zamknij</button>-->
           <button type="button" class="btn btn-register" (click)="signUp()" >Zarejestruj się</button>
         </div>
       </div>

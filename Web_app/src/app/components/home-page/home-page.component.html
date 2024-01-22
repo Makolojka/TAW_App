@@ -6,10 +6,20 @@
     <div class="spacer"></div>
 
     <h1>Najpopularniejsze wydarzenia</h1>
-    <latest-events [items$]="items$" *ngIf="dataLoaded"></latest-events>
+    <latest-events *ngIf="dataLoaded"></latest-events>
     <div class="spacer"></div>
 
-    <h1>Wydarzenia w twoim mieście</h1>
+    <h1 *ngIf="showPreferredEvents">Wybrane dla Ciebie</h1>
+    <div class="local">
+      <div class="align-center-row" style="display: flex; flex-wrap: wrap;">
+        <preferred-events class="align-center-row flex-wrap" (arePreferredEventsLoaded)="onItemsAvailable($event)"></preferred-events>
+      </div>
+      <div class="align-center-column" *ngIf="showPreferredEvents">
+        <button>Zobacz więcej</button>
+      </div>
+    </div>
+
+    <h1>Najnowsze wydarzenia</h1>
     <div class="local">
       <div class="align-center-row" style="display: flex; flex-wrap: wrap;">
         <div *ngFor="let item of items$">
@@ -33,3 +43,28 @@
   </div>
   <custom-footer></custom-footer>
 </div>
+
+<!-- Personalized Offers Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="personalizedOffersModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 style="margin: 0">Witaj w BiletSferze</h1>
+        <a class="close" (click)="closeModal('personalizedOffersModal')" data-dismiss="modal" aria-label="Close">
+          <i class="fa-solid fa-close icon"></i>
+        </a>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 18px;">Dziękujemy za dołączenie do naszej społeczności!
+          Abyśmy mogli zapewnić Ci lepsze doświadczenie, zachęcamy do ustawienia swoich preferencji.
+          Dzięki temu będziemy mogli dostosować oferty i wyszukiwania do Twoich potrzeb.
+          Kliknij 'Ustaw preferencje' i ciesz się spersonalizowanymi treściami!</p>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: space-between">
+        <button type="button" class="btn btn-register" (click)="closeWithoutPreferences()">Na razie nie</button>
+        <button type="button" class="btn btn-register" (click)="goToPreferences()">Ustaw preferencje</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -6,6 +6,9 @@ import {Observable} from "rxjs";
 import {Ticket} from "../components/event-card/Ticket";
 import {Event} from "../interfaces/Event";
 import {LikedResponse} from "../interfaces/is-liked-followed";
+import Transaction from "../interfaces/transaction";
+import {Seat} from "../interfaces/seat";
+import {UserPreferences} from "../interfaces/user-preferences";
 @Injectable({
   providedIn: 'root'
 })
@@ -19,8 +22,25 @@ export class DataService {
   getAll() {
     return this.http.get(this.url + '/api/events');
   }
+
+  // Top events
+  getTopFiveMostViewed() {
+    return this.http.get(this.url + '/api/events/most-viewed');
+  }
   getById(id: string) {
     return this.http.get(this.url + '/api/events/' + id);
+  }
+
+  // User preferences
+  getUserPreferences(id: string) {
+    return this.http.get(this.url + '/api/user/preferences/' + id);
+  }
+  updateOneTimeMonitChecked(userId: string) {
+    return this.http.put(this.url+'/api/user/'+userId+'/preferences/onetimemonit', {});
+  }
+
+  getTicketDetailsById(id: string) {
+    return this.http.get(this.url + '/api/events/tickets/' + id);
   }
 
   // Artists endpoints
@@ -34,7 +54,6 @@ export class DataService {
   createNewArtist(newArtist: { image: string; career: string; name: string; shortDescription: string }) {
     return this.http.post(this.url + '/api/artist', newArtist);
   }
-
 
   //Tickets endpoints
   getTicketsForEvent(eventId: string) {
@@ -51,6 +70,11 @@ export class DataService {
     return this.http.post(this.url + '/events/transaction', newEvent);
   }
 
+  //Updates existing event
+  updateExistingEvent(eventData: Event) {
+    return this.http.patch(this.url + '/api/event/update', {eventData});
+  }
+
   //Cart endpoints
   getCart(userId: string) {
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.token,
@@ -64,10 +88,36 @@ export class DataService {
     return this.http.post(this.url + '/api/user/' + userId + '/cart/remove-ticket/' + eventId + '/' + ticketId, body, {headers: headers});
   }
 
-  addTicketToCart(userId: string, eventId: string, ticketId: string) {
+  addTicketToCart(userId: string, eventId: string, ticketId: string, quantity: number) {
     let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.token,
       'Content-Type': 'application/json'})
-    return this.http.post(this.url + '/api/user/' + userId + '/cart/add-ticket/' + eventId + '/' + ticketId, {}, {headers: headers});
+    return this.http.post(this.url + '/api/user/' + userId + '/cart/add-ticket/' + eventId + '/' + ticketId, {quantity}, {headers: headers});
+  }
+
+  addTicketsToCart(userId: string, eventId: string, ticketId: string, quantity: number, chosenSeats: string) {
+    let headers = new HttpHeaders({'Authorization': 'Bearer ' + this.token,
+      'Content-Type': 'application/json'})
+    return this.http.post(this.url + '/api/user/' + userId + '/cart/add-tickets/' + eventId + '/' + ticketId, {quantity, chosenSeats}, {headers: headers});
+  }
+
+  //Buy tickets / make transaction
+  processTransaction(transactionData: Transaction) {
+    return this.http.post(this.url + '/api/transactions/transaction', transactionData);
+  }
+
+  // Get all user transactions
+  getAllTransactions(userId: string){
+    return this.http.get(this.url + '/api/transactions/all/' + userId);
+  }
+
+  // Get user's preferences
+  getPreferencesById(id: string): Observable<UserPreferences> {
+    return this.http.get<UserPreferences>(this.url + '/api/user/' + id + '/preferences');
+  }
+
+  // Get events based on user preferences
+  getEventsBasedOnUserPreferences(userId: string) {
+    return this.http.get(this.url+'/api/events/preferences/'+userId);
   }
 
   // TODO: dodać autoryzację
@@ -146,6 +196,11 @@ export class DataService {
   // Get sale data for chart
   getSaleDataForOrganiser(organiserName: string): Observable<any> {
     return this.http.get(this.url+'/api/organiser/sale-data/'+organiserName);
+  }
+
+  // Change event availability
+  deactivateEvent(eventId: string) {
+    return this.http.put(this.url+'/api/event/deactivate/'+eventId, {});
   }
 
 }

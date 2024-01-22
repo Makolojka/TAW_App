@@ -18,7 +18,6 @@
   <div class="banner-row" id="about">
     <span><i class="fas fa-calendar icon" data-tooltip="Data"></i>{{ date }}</span>
     <span><i class="fas fa-location icon" data-tooltip="Lokalizacja"></i>{{ location }}</span>
-<!--    TODO: organizator do modelu dodać-->
     <span><i class="fa-solid fa-user-tie icon" data-tooltip="Organizator"></i>{{ organiser }}</span>
   </div>
   <div class="banner-line"></div>
@@ -35,8 +34,9 @@
           <ul>
             <li (click)="scrollTo('about')"><a>O wydarzeniu</a></li>
             <li (click)="scrollTo('tickets')"><a>Bilety</a></li>
+            <li (click)="scrollTo('picker')" *ngIf="roomSchema && roomSchema.length > 0"><a>Wybierz bilety</a></li>
             <li (click)="scrollTo('additional')"><a>Dodatkowe informacje</a></li>
-            <li (click)="scrollTo('artists')"><a>Artyści</a></li>
+            <li (click)="scrollTo('artists')" *ngIf="artists.length != 0"><a>Artyści</a></li>
           </ul>
         </div>
       </div>
@@ -62,27 +62,118 @@
                 <div class="right-bottom">
                   <p>{{ location }}</p>
                 </div>
+                <div class="right-bottom" *ngIf="!roomSchema || roomSchema.length === 0">
+                  <p style="font-weight: 500">Pozostało bilet(ów):</p>
+                  <p>{{ ticket.maxNumberOfTickets }}</p>
+                </div>
               </div>
             </div>
             <div class="right-section">
               <div class="price">
                 <h2>Od {{ ticket.price }} zł</h2>
               </div>
-              <div class="buy-button">
-                <!-- Use your main-button component here -->
-                 <main-button (click)="addTicket(userId, ticket._id)" [text]="'Dodaj do koszyka'" [buttonClass]="'mt-3 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+              <div class="buy-button" *ngIf="!roomSchema || roomSchema.length === 0">
+                 <main-button *ngIf="isLoggedIn" (click)="addTicket(userId, ticket._id, 1)" [text]="'Dodaj do koszyka'" [buttonClass]="'mt-3 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+                 <main-button *ngIf="!isLoggedIn" (click)="showMonit()" [text]="'Dodaj do koszyka'" [buttonClass]="'mt-3 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+              </div>
+              <div class="buy-button" *ngIf="roomSchema && roomSchema.length > 0">
+                <main-button (click)="scrollTo('picker')" [text]="'Wybierz bilety'" [buttonClass]="'mt-3 btn btn-special'" [icon]="'fa-ticket'"></main-button>
               </div>
             </div>
           </div>
         </div>
       </div>
       <!--End of tickets-->
-      <div class="additional-info">
-        <h2 id="additional">Dodatkowe informacje</h2>
-        <p class="text">{{ additionalText }}</p>
+
+      <!-- Seats picker -->
+      <div id="picker" class="room-picker-section additional-info" *ngIf="roomSchema && roomSchema.length > 0">
+        <h2 id="room-schema-section">Wybierz miejsca</h2>
+          <div class="cinema-schema-container">
+            <div class="cinema-schema-main">
+              <div class="cinema-screen-container">
+                <div class="cinema-screen">
+                  <h3 style="padding: 20px 0 0 0">Ekran</h3>
+                  <h4>Sala 1</h4>
+                </div>
+              </div>
+
+              <!-- Seats -->
+              <div class="room-schema">
+                <div *ngFor="let row of roomSchema; let i = index" class="room-row">
+                  <div class="align-row">
+                    <div *ngFor="let seat of row.seats; let j = index;" class="seat"
+                         [ngStyle]="{'background-color': isSeatChosen(seat) ? '#222' : isSeatAvailable(seat) ? seat.color : '#ddd'}"
+                         (click)="selectedSeat(seat)">
+                      {{ i + 1 }}.{{ j + 1 }}.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Legend for seat types and prices -->
+              <div class="legend-container" *ngIf="roomSchema.length !== 0">
+                <h3>Legenda</h3>
+
+                <div class="align-center-row">
+                  <div *ngIf="tickets.length === 0">
+                    <h4>Brak biletów. Utwórz bilety w kroku "Dodaj bilety".</h4>
+                  </div>
+
+                  <!-- Display ticket information in the legend -->
+                  <div class="align-center-row flex-wrap">
+                    <div class="legend-tickets" *ngFor="let ticket of tickets; let i = index">
+                      <div class="align-center-row flex-wrap mx-lg-3">
+                        <div class="seat" [ngStyle]="getBackgroundColor(i)"></div>
+                        <h4>{{ ticket.type }}</h4>
+                        <h4>{{ ticket.price }} zł</h4>
+                      </div>
+                    </div>
+                    <div class="legend-tickets">
+                      <div class="align-center-row mx-lg-3">
+                        <div class="seat" style="background-color: #222"></div>
+                        <h4>Twoje miejsce</h4>
+                      </div>
+                    </div>
+                    <div class="legend-tickets">
+                      <div class="align-center-row mx-lg-3">
+                        <div class="seat" style="background-color: #dddddd"></div>
+                        <h4>Zajęte miejsce</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Chosen Seats -->
+              <div class="choosed-seats align-center-column">
+                <h3>Wybrane miejsca</h3>
+                <div class="align-center-row" *ngIf="chosenSeats.length === 0">
+                  <h4>Brak wybranych biletów</h4>
+                </div>
+                <div class="align-center-row" *ngIf="chosenSeats.length > 0">
+                  <div class="seat" *ngFor="let seat of chosenSeats" [ngStyle]="{'background-color': seat.color}" style="color: white">
+                    {{ parseSeat(seat.id) }}
+                  </div>
+                </div>
+              </div>
+              <div class="choosed-seats align-center-column">
+                <h3>Cena całkowita: {{ calculateTotalPrice() }} zł</h3>
+              </div>
+
+              <div class="align-center-column">
+                <button (click)="prepareMultipleTickets()">Dodaj bilety do koszyka</button>
+              </div>
+
+            </div>
+        </div>
       </div>
 
-      <div class="artists">
+      <div class="additional-info">
+        <h2 id="additional">Dodatkowe informacje</h2>
+        <div [innerHTML]="sanitizeHtml(additionalText)" class="text"></div>
+      </div>
+
+      <div class="artists" *ngIf="artists.length != 0">
         <h2 id="artists">Artyści</h2>
         <div class="slider-container">
           <div class="slider">
@@ -92,8 +183,7 @@
                 <img [src]="artist.image" alt="{{ artist.name }}" />
               </div>
               <h3>{{ artist.name }}</h3>
-              <button class="read-more-button" (click)="showArtistDetails('aaa')">Więcej</button>
-              <!-- You can add more details about the artist here if needed -->
+              <button class="read-more-button" (click)="showArtistDetails('Info')">Więcej</button>
             </div>
           </div>
         </div>

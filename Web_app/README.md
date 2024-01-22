@@ -1,27 +1,58 @@
-# BiletSfera
+# Nazwa przedmiotu
+Technologie aplikacji webowych II
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.3.
+***
 
-## Development server
+# Autor
+Marcin Król
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+***
 
-## Code scaffolding
+# Temat projektu
+System sprzedaży biletów na różne typy wydarzeń.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+***
 
-## Build
+# Opis projektu
+Aplikacja webowa umożliwi użytkownikom przeglądanie i wyszukiwanie dostępnych wydarzeń, a także wybieranie najlepszych miejsc w sali na podstawie „schematu” miejsc. Po wybraniu biletów, użytkownicy mogą dokonać płatności. Aplikacja umożliwi również organizatorom wydarzeń łatwe dodawanie nowych wydarzeń i zarządzanie sprzedażą biletów poprzez interfejs administracyjny. Organizatorzy będą mogli także skorzystać z narzędzi analitycznych, aby śledzić sprzedaż biletów i dostosowywać ceny w zależności od popytu. Głównym celem aplikacji jest, aby użytkownicy mogli łatwo i szybko kupować bilety na swoje ulubione wydarzenia, a organizatorzy posiadali pełną kontrolę nad sprzedażą biletów i wglądem do danych analitycznych, które pomogą im w podejmowaniu decyzji biznesowych. 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+***
 
-## Running unit tests
+# Uruchomienie projektu
+Aby, uruchomić projekt należy znajdować się w terminalu w odpowiednim folderze(ścieżce) i wywołać komendę '_npm start_' zarówno dla części serwerowej(backend) jak 
+i klienckiej(frontend).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Ścieżka części serwerowej: <br>
+```<..\TAW_App\Server>npm start```
 
-## Running end-to-end tests
+Ścieżka części frontendowej: <br>
+```<..\TAW_App\Web_app>npm start```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Część serwerowa dostępna jest pod adresem: 
+> http://localhost:3001/
+> 
+Część kliencka dostępna jest pod adresem: 
+> http://localhost:4200/
 
-## Further help
+***
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# Dokumentacja API
+Szczegółowa dokumentacja API dostępna jest z poziomu interfejsu swagger.io. <br>
+<br>Po włączeniu serwera dokumentację można znaleźć pod adresem: 
+> http://localhost:3001/api-docs/#/<br>
+> 
+> 
+***
+
+# Technologie użyte w projekcie
+- node.js
+- express.js
+- swagger.io
+- angular 16
+- mongo.db
+- javascript/typescript
+
+***
+
+# Prezentacja aplikacji
+https://youtu.be/TaqddrTQ0sc

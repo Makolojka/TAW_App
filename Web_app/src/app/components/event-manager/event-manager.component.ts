@@ -22,18 +22,5 @@ export class EventManagerComponent implements OnInit{
     this.userId = this.authService.getUserId();
   }
 
-  // TODO: Tylko do testu - usunąć później
-  // addEventTOP(){
-  //   this.service.addEventToOwnedEvents(this.userId, '64c7d625d0be393eb01912f6').subscribe(
-  //     (response) => {
-  //       console.log("Event added to ownedEvents");
-  //     },
-  //     (error) => {
-  //       throw error;
-  //     }
-  //   );
-  //
-  // }
-
   protected readonly open = open;
 }

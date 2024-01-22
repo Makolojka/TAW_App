@@ -30,7 +30,6 @@
 
         <div class="input-container">
           <select class="input-field input-field-form" [(ngModel)]="categoriesFilterValue" (change)="onCategoryChange($event)" aria-label="cat_select" id="cat">
-<!--            <option selected disabled>Kategorie</option>-->
             <option value="Wszystkie">Wszystkie</option>
             <option value="Muzyka">Muzyka</option>
             <option value="Kino">Kino</option>
@@ -46,7 +45,6 @@
 
         <div class="input-container">
           <select class="input-field input-field-form" [(ngModel)]="subCategoriesFilterValue" (change)="onSubCategoryChange($event)"  aria-label="sub_select" id="sub_cat">
-<!--            <option selected disabled>Podkategorie</option>-->
             <option value="Wszystkie">Wszystkie</option>
             <option value="Festiwale">Festiwale</option>
             <option value="Pop">Pop</option>
@@ -106,6 +104,4 @@
       </div>
      </div>
   </div>
-
-  <!--End of music events-->
 </div>

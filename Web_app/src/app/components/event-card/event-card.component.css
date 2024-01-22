@@ -50,10 +50,6 @@
   justify-content: flex-start;
   text-align: left;
   flex-direction: column;
-  /*clip-path: polygon(50% 0%, 95% 1%, 100% 15%, 100% 100%, 0 100%, 0 15%, 5% 1%);*/
-  /*clip-path: polygon(30% 2%, 70% 2%, 100% 5%, 100% 100%, 0 100%, 0 5%);*/
-  /*clip-path: polygon(49% 0, 79% 0, 100% 5%, 100% 95%, 73% 100%, 49% 100%, 24% 100%, 0 95%, 0 5%, 23% 0);*/
-  /*clip-path: polygon(46% 4%, 73% 4%, 100% 0, 100% 38%, 100% 100%, 0 100%, 0 55%, 0 16%, 21% 8%);*/
 }
 
 .card:hover .card-content {
@@ -67,7 +63,7 @@
 }
 
 .card-details {
-  margin-top: 10px;
+  margin-top: 30px;
   display: none;
   padding: 0 5px;
 }

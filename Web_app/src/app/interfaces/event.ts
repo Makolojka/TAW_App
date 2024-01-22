@@ -1,4 +1,5 @@
 import {Ticket} from "./ticket";
+import {RoomSchema} from "./room-schema";
 
 export interface Event {
   title: string;
@@ -15,4 +16,5 @@ export interface Event {
   likes: string[];
   followers: string[];
   views: number;
+  roomSchema?: RoomSchema;
 }

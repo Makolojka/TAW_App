@@ -3,8 +3,9 @@ import uniqueValidator from 'mongoose-unique-validator';
 import mongoConverter from '../service/mongoConverter';
 import * as _ from "lodash";
 import {ObjectId} from "mongodb";
+import ApplicationException from "../service/applicationException";
+import applicationException from "../service/applicationException";
 
-//TODO: Dodać liczbę dostepnych biletów
 const ticketSchema = new mongoose.Schema({
     type: { type: String },
     price: { type: Number },
@@ -37,8 +38,8 @@ async function createNewOrUpdate(data) {
     return Promise.resolve().then(() => {
         if (!data.id) {
             return new TicketModel(data).save().then(result => {
-                if (result[0]) {
-                    return mongoConverter(result[0]);
+                if (result) {
+                    return mongoConverter(result);
                 }
             });
         } else {
@@ -50,7 +51,6 @@ async function createNewOrUpdate(data) {
 async function createTicketsAndGetIds(tickets, session) {
     const ticketIds = [];
     for (const ticket of tickets) {
-        // Logic to create a single ticket and get its ID
         const createdTicket = await createTicketAndGetId(ticket, session);
         ticketIds.push(createdTicket._id);
     }
@@ -59,10 +59,23 @@ async function createTicketsAndGetIds(tickets, session) {
 }
 
 async function createTicketAndGetId(ticket, session) {
-    // Logic to create a single ticket and return its ID
     const createdTicket = await TicketModel.create([ticket], { session });
     console.log("createdTicket in createTicketAndGetId: ", createdTicket)
     return createdTicket[0]._id;
+}
+
+async function decreaseMaxTickets (ticketId, count, session){
+    try {
+        const ticket = await TicketModel.findById(ticketId).session(session);
+        if (!ticket) {
+            throw applicationException.new(applicationException.NOT_FOUND, 'Ticket not found');
+        } else if (ticket.maxNumberOfTickets !== undefined) {
+            ticket.maxNumberOfTickets -= count;
+            await ticket.save();
+        }
+    } catch (error) {
+        throw error;
+    }
 }
 
 export default {
@@ -71,7 +84,7 @@ export default {
     createNewOrUpdate: createNewOrUpdate,
     createTicketsAndGetIds: createTicketsAndGetIds,
     createTicketAndGetId: createTicketAndGetId,
-
+    decreaseMaxTickets: decreaseMaxTickets,
 
     model: TicketModel
 };

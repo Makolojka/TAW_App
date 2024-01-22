@@ -35,8 +35,6 @@ export class WishListComponent implements OnInit {
           this.isItemsEmpty = true;
         }
         this.fetchTicketsForEachEvent();
-        // console.log("ticketsMap:" + JSON.stringify(this.ticketsMap));
-        // console.log("lowestPrices:" + JSON.stringify(this.lowestPrices)); // Check if lowest prices are stored
       });
   }
 
@@ -44,7 +42,6 @@ export class WishListComponent implements OnInit {
     this.items$.forEach((event: any) => {
       this.service.getTicketsForEvent(event.id).subscribe((res: any) => {
         this.ticketsMap[event.id] = res;
-        // console.log("res:" + JSON.stringify(res));
 
         // Finds the lowest price for the current event
         const lowestPrice = res.reduce((minPrice: number, ticket: any) => {
@@ -53,14 +50,12 @@ export class WishListComponent implements OnInit {
 
         // Stores the lowest price for the current event in the lowestPrices object
         this.lowestPrices[event.id] = lowestPrice;
-        // console.log("lowestPrice for event " + event.id + ": " + lowestPrice);
       });
     });
   }
   getLowestPrice(eventId: string): number | undefined {
     return this.lowestPrices[eventId];
   }
-  // TODO: zabezpieczenie, co jak nie wykona się jedna z metod?
   followEvent(eventId: string){
     if(this.userId && eventId)
     {
@@ -76,7 +71,7 @@ export class WishListComponent implements OnInit {
       this.service.addEventLikeOrFollower(eventId, this.userId, 'follow').subscribe(
         (response) => {
           //   Toast message
-          console.log("Event added to liked");
+          console.log("Event added to followed");
         },
         (error) => {
           throw error;

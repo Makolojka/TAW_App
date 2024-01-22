@@ -93,15 +93,6 @@ export class CategoriesComponent implements OnInit {
       this.endDate = '06.12.2100 18:00';
     }
 
-    // if (!filteredItems || filteredItems.length === 0) {
-    //   this.isResultEmpty = true;
-    //   console.log("this.isResultEmpty: "+this.isResultEmpty)
-    // }
-    // else {
-    //   this.isResultEmpty = false;
-    //   console.log("this.isResultEmpty: "+this.isResultEmpty)
-    // }
-
     if (!this.originalItems$ || this.originalItems$.length === 0) {
       return;
     }
@@ -193,7 +184,7 @@ export class CategoriesComponent implements OnInit {
     }, tickets[0].price);
   }
 
-// Returns the highest price of all tickets for the given event
+  // Returns the highest price of all tickets for the given event
   getHighestTicketPrice(eventId: string): number {
     const tickets = this.ticketsMap[eventId];
     if (!tickets || tickets.length === 0) {
@@ -221,65 +212,34 @@ export class CategoriesComponent implements OnInit {
 
   // Converts strings with different formats to Date type
   convertDate(item: any): { startDate: Date, endDate: Date } {
-    // console.log("item: "+JSON.stringify(item))
     let dateStr = item.date;
     let startDate: Date;
     let endDate: Date;
 
-      // Handle date format "30.03.2024"
-      const dateParts = dateStr.split('.');
-      if (dateParts.length === 3 && !dateStr.includes(' ') && !dateStr.includes('-')) {
-        const [day, month, year] = dateParts;
-        dateStr = `${year}-${month}-${day}`;
-        startDate = new Date(dateStr);
-        endDate = startDate; // For single dates, endDate is the same as startDate
-      } else if (dateStr.includes("-") && !dateStr.includes(' ') && !dateStr.includes(':')) {
-        // This pattern: 28-29.07.2023
-        const [startDatePart, endDatePart] = dateStr.split('-');
+    const dashSplit = dateStr.split('-');
+    if (dashSplit.length > 1) {
+      dateStr = dashSplit[dashSplit.length - 1].trim();
+    }
 
-        if (item.date.length <= 13) { // Check if the pattern is "28-29.07.2023"
-          const [day, monthYear] = startDatePart.split('.');
-          const [endDay, endMonth, endYear] = endDatePart.split('.');
-
-          // Construct the start date string
-          const startDateStr = `${endYear}-${endMonth}-${day}`;
-          // console.log("startDateStr:" + startDateStr + " for event " + item.title);
-
-          // Construct the end date string
-          const endDateStr = `${endYear}-${endMonth}-${endDay}`;
-          // console.log("endDateStr:" + endDateStr + " for event " + item.title);
-
-          startDate = new Date(startDateStr);
-          endDate = new Date(endDateStr);
-        } else {
-          const [startDay, startMonth, startYear] = startDatePart.split('.');
-          const [endDay, endMonth, endYear] = endDatePart.split('.');
-
-          // Construct the start date string
-          const startDateStr = `${startYear}-${startMonth}-${startDay}`;
-          // console.log("startDateStr:" + startDateStr + " for event " + item.title);
-
-          // Construct the end date string
-          const endDateStr = `${endYear}-${endMonth}-${endDay}`;
-          // console.log("endDateStr:" + endDateStr + " for event " + item.title);
-
-          startDate = new Date(startDateStr);
-          endDate = new Date(endDateStr);
-        }
-      } else {
-        // Handle date format "02.03.2024 18:00"
-        if (dateStr.includes(' ')) {
-          const [datePart, timePart] = dateStr.split(' ');
-          const [day, month, year] = datePart.split('.');
-          const [hour, minute] = timePart.split(':');
-          dateStr = `${year}-${month}-${day}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:00`;
-        }
-        startDate = new Date(dateStr);
-        endDate = startDate; // For single dates, endDate is the same as startDate
+    // Handle date format "dd.mm.yyyy"
+    if (!dateStr.includes(' ') && !dateStr.includes(':')) {
+      const [day, month, year] = dateStr.split('.');
+      dateStr = `${year}-${month}-${day}`;
+      startDate = new Date(dateStr);
+      endDate = startDate; // For single dates, endDate is the same as startDate
+    } else {
+      // Handle date format "dd.mm.yyyy hh:mm"
+      if (dateStr.includes(' ')) {
+        const [datePart, timePart] = dateStr.split(' ');
+        const [day, month, year] = datePart.split('.');
+        const [hour, minute] = timePart.split(':');
+        dateStr = `${year}-${month}-${day}T${hour.padStart(2, '0')}:${minute.padStart(2, '0')}:00`;
       }
-
-      // console.log("Event: " + item.title + " startDate: " + startDate + " | endDate: " + endDate);
+      startDate = new Date(dateStr);
+      endDate = startDate; // For single dates, endDate is the same as startDate
+    }
 
     return { startDate, endDate };
   }
+
 }

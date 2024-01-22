@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import mongoConverter from '../service/mongoConverter';
 import * as _ from "lodash";
 import eventDAO from "../DAO/eventDAO";
+import userDAO from "../DAO/userDAO";
+import ticketDAO from "./ticketDAO";
+import applicationException from "../service/applicationException";
+import UserDAO from "../DAO/userDAO";
 
 const ObjectId = mongoose.Types.ObjectId;
 const EventModel = eventDAO.model;
@@ -12,7 +16,8 @@ const transactionSchema = new mongoose.Schema({
         ticketId: { type: mongoose.Schema.Types.ObjectId, ref: 'tickets' },
         eventId: { type: mongoose.Schema.Types.ObjectId, ref: 'events' },
         count: { type: Number},
-        singleTicketCost: { type: Number }
+        singleTicketCost: { type: Number },
+        seatNumbers: [{ type: String, required: false }]
     }],
     saleDate: { type: Date, default: Date.now },
     totalCost: { type: Number },
@@ -37,18 +42,43 @@ async function get(id) {
     });
 }
 
-async function createNewOrUpdate(data) {
-    return Promise.resolve().then(() => {
-        if (!data.id) {
-            return new TransactionModel(data).save().then(result => {
-                if (result[0]) {
-                    return mongoConverter(result[0]);
-                }
-            });
-        } else {
-            return TransactionModel.findByIdAndUpdate(data.id, _.omit(data, 'id'), {new: true});
+async function getAllTransactionsByUserId(userId) {
+    try {
+        const user = await UserDAO.model.findOne({ _id: userId });
+        if (!user) {
+            throw applicationException.new(applicationException.NOT_FOUND, 'User not found');
         }
-    });
+
+        const result = await TransactionModel.find({ userId: userId });
+        if (result) {
+            return mongoConverter(result);
+        }
+        return [];
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function createNewOrUpdate(data) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+        const result = await new TransactionModel(data).save({ session });
+        await userDAO.clearUserCart(data.userId, session);
+        // Decrease maxNumberOfTickets for each purchased ticket
+        for (const ticketData of data.tickets) {
+            await ticketDAO.decreaseMaxTickets(ticketData.ticketId, ticketData.count, session);
+        }
+
+        await session.commitTransaction();
+        session.endSession();
+        return mongoConverter(result);
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        throw error;
+    }
 }
 
 async function getTransactionsForEvent(eventId) {
@@ -92,6 +122,7 @@ async function countTicketsSoldForOrganiser(organiserName) {
     try {
         // Find events by the organizer
         const eventsByOrganiser = await EventModel.find({ organiser: organiserName });
+
         // Retrieve tickets from events and convert them to ObjectId
         const eventTickets = eventsByOrganiser.reduce((tickets, event) => {
             return tickets.concat(event.tickets.map(ticketId => ObjectId(ticketId)));
@@ -136,17 +167,16 @@ async function calculateTotalEarningsForOrganiser(organiserName) {
         // Find events by the organizer's name
         const eventsByOrganiser = await EventModel.find({ organiser: organiserName });
 
-        console.log("eventsByOrganiser: ",eventsByOrganiser)
         // Retrieve tickets from events and convert them to ObjectId strings
         const eventTickets = eventsByOrganiser.reduce((tickets, event) => {
             return tickets.concat(event.tickets.map(ticketId => String(ticketId)));
         }, []);
-        console.log("eventTickets: ",eventTickets)
+
         // Find transactions for tickets linked to events of the organizer
         const transactions = await TransactionModel.find({
             'tickets.ticketId': { $in: eventTickets }
         });
-        console.log("transactions: ",transactions)
+
         // Calculate total earnings for the organizer
         let totalEarningsForOrganiser = 0;
 
@@ -158,7 +188,6 @@ async function calculateTotalEarningsForOrganiser(organiserName) {
                 }
             });
         });
-        console.log("totalEarningsForOrganiser: ",totalEarningsForOrganiser)
 
         return totalEarningsForOrganiser;
     } catch (error) {
@@ -266,11 +295,41 @@ async function getSaleDataForOrganiser(organiserName) {
     }
 }
 
+async function updateIsAvailableForEventSeats(eventId, chosenSeats, session) {
+    try {
+        const event = await EventModel.findById(eventId).session(session);
 
+        if (!event) {
+            throw new Error('Event not found');
+        }
+        const roomSchema = event.roomSchema.roomSchema;
 
+        for (const chosenSeat of chosenSeats) {
+            const parsedSeat = chosenSeat.replace(/\.$/, ''); // Parse the seat string
+            const [frontendRowIndex, frontendColIndex] = parsedSeat.split('.').map(Number); // Split seat ID into row and column
 
+            // Convert frontend indices to backend indices
+            const backendRowIndex = frontendRowIndex - 1;
+            const backendColIndex = frontendColIndex - 1;
 
+            for (const room of roomSchema) {
+                const seat = room.seats.find(seat => {
+                    // Adjust the seat indexing to match the database's indexing
+                    const [dbRowIndex, dbColIndex] = seat.id.split('.').map(Number);
+                    return dbRowIndex === backendRowIndex && dbColIndex === backendColIndex;
+                });
 
+                if (seat) {
+                    seat.isAvailable = false;
+                    break;
+                }
+            }
+        }
+        await event.save();
+    } catch (error) {
+        throw error;
+    }
+}
 
 export default {
     query: query,
@@ -282,6 +341,8 @@ export default {
     calculateTotalEarningsForEvent: calculateTotalEarningsForEvent,
     calculateTotalViewsForOrganiser: calculateTotalViewsForOrganiser,
     getSaleDataForOrganiser: getSaleDataForOrganiser,
+    getAllTransactionsByUserId: getAllTransactionsByUserId,
+    updateIsAvailableForEventSeats: updateIsAvailableForEventSeats,
 
     model: TransactionModel
 };

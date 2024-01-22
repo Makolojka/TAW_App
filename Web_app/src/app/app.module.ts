@@ -26,7 +26,6 @@ import { MultiItemCarouselComponent } from './components/multi-item-carousel/mul
 import { WishListComponent } from './components/wish-list/wish-list.component';
 import { CartComponent } from './components/cart/cart.component';
 import { LikedComponent } from './components/liked/liked.component';
-import { LocalEventsComponent } from './components/local-events/local-events.component';
 import {CategoriesComponent} from "./components/categories/categories.component";
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -37,7 +36,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import { EventCardWideComponent } from './components/event-card-wide/event-card-wide.component';
 import {DataService} from "./services/data.service";
 import { TextRestrainPipe } from './pipes/text-restrain.pipe';
-import {NgOptimizedImage} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import {AuthService} from "./services/auth.service";
 import {AuthInterceptor} from "./services/auth.interceptor";
 import {CategoryFilterService} from "./services/category-filter.service";
@@ -50,6 +49,12 @@ import { OrganizerOverviewPageComponent } from './components/organizer-overview-
 import {ActiveEventsPanelComponent} from "./components/event-manager/active-events-panel/active-events-panel.component";
 import {ReportsPanelComponent} from "./components/event-manager/reports-panel/reports-panel.component";
 import {EventCreatorPanelComponent} from "./components/event-manager/event-creator-panel/event-creator-panel.component";
+import { OrderComponent } from './components/cart/order/order.component';
+import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
+import { RoomBuilderComponent } from './components/event-manager/event-creator-panel/room-builder/room-builder.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { PreferredEventsComponent } from './components/preferred-events/preferred-events.component';
+import { StatusTextPipe } from './pipes/status-text.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,7 +73,6 @@ import {EventCreatorPanelComponent} from "./components/event-manager/event-creat
     WishListComponent,
     CartComponent,
     LikedComponent,
-    LocalEventsComponent,
     CategoriesComponent,
     EventCardWideComponent,
     TextRestrainPipe,
@@ -78,7 +82,13 @@ import {EventCreatorPanelComponent} from "./components/event-manager/event-creat
     OrganizerOverviewPageComponent,
     ActiveEventsPanelComponent,
     ReportsPanelComponent,
-    EventCreatorPanelComponent
+    EventCreatorPanelComponent,
+    OrderComponent,
+    TransactionListComponent,
+    RoomBuilderComponent,
+    UserDetailsComponent,
+    PreferredEventsComponent,
+    StatusTextPipe
   ],
   imports: [
     BrowserModule,
@@ -103,6 +113,7 @@ import {EventCreatorPanelComponent} from "./components/event-manager/event-creat
   ],
   providers: [
     DataService,
+    DatePipe,
     CategoryFilterService,
     AuthService,
     {
