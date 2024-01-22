@@ -1,0 +1,107 @@
+<nav-bar></nav-bar>
+<div class="banner">
+  <img src="https://media.npr.org/assets/img/2015/08/14/istock_000043549038_medium_wide-e825e6a2a49bc79f4d924300a48eba1cb39d21d8-s800-c85.webp" alt="Banner Image">
+  <h2 class="banner-text">Wszystkie wydarzenia</h2>
+</div>
+<div class="content">
+  <div class="carousel">
+    <h1>Znajdź bilety na wydarzenia</h1>
+  </div>
+
+  <div class="main">
+    <div class="sort-container">
+      <select class="form-select input-field-form" [(ngModel)]="sortOption" (change)="applyFilters()" aria-label="sort_select">
+        <option selected value="default">Domyślne sortowanie</option>
+        <option value="popularity">Sortuj wg. popularności</option>
+        <option value="newest">Sortuj od najnowszych</option>
+        <option value="lowest">Sortuj po cenie od najniższej</option>
+        <option value="highest">Sortuj po cenie od najwyższej</option>
+      </select>
+      <div class="btn-container">
+        <button class="btn" (click)="applyFilters()">Filtruj</button>
+      </div>
+    </div>
+
+      <div class="filters">
+        <div class="input-container">
+          <input type="text" class="input-field" [(ngModel)]="locationFilter" id="location" placeholder="Warszawa">
+          <label for="location" class="input-label">Lokalizacja</label>
+        </div>
+
+        <div class="input-container">
+          <select class="input-field input-field-form" [(ngModel)]="categoriesFilterValue" (change)="onCategoryChange($event)" aria-label="cat_select" id="cat">
+            <option value="Wszystkie">Wszystkie</option>
+            <option value="Muzyka">Muzyka</option>
+            <option value="Kino">Kino</option>
+            <option value="Teatr">Teatr</option>
+            <option value="Targi">Targi</option>
+            <option value="Konwenty">Konwenty</option>
+            <option value="Sport">Sport</option>
+            <option value="Zwiedzanie">Zwiedzanie</option>
+            <option value="Inne">Inne</option>
+          </select>
+          <label for="cat" class="select-label">Kategorie</label>
+        </div>
+
+        <div class="input-container">
+          <select class="input-field input-field-form" [(ngModel)]="subCategoriesFilterValue" (change)="onSubCategoryChange($event)"  aria-label="sub_select" id="sub_cat">
+            <option value="Wszystkie">Wszystkie</option>
+            <option value="Festiwale">Festiwale</option>
+            <option value="Pop">Pop</option>
+            <option value="Rock">Rock</option>
+            <option value="Jazz_blues">Jazz i Blues</option>
+            <option value="Metal">Metal</option>
+            <option value="Disco_polo">Disco Polo</option>
+            <option value="Techno/Elektro">Techno/Elektro</option>
+            <option value="Muzyka Klasyczna">Muzyka Klasyczna</option>
+            <option value="Inne">Inne</option>
+          </select>
+          <label for="sub_cat" class="select-label">Podkategorie</label>
+        </div>
+
+        <div class="input-container input-date" [(ngModel)]="startDate" (change)="onDateStart($event)" ngDefaultControl>
+          <input type="date" class="input-field" id="startDate" name="startDate">
+          <label for="startDate" class="input-label">Data od</label>
+        </div>
+
+        <div class="input-container input-date" [(ngModel)]="endDate" (change)="onDateEnd($event)" ngDefaultControl>
+          <input type="date" class="input-field" id="endDate" name="endDate">
+          <label for="endDate" class="input-label">do</label>
+        </div>
+        <!--  End of filters -->
+      </div>
+
+    <!--    TODO: zmienić żeby nie pobierać dwa razy tych samych kart-->
+    <!--Change view-->
+    <div class="change-view">
+      <div *ngIf="isRegularView" (click)="toggleView('wide')">
+        <span>Widok:</span><i class="fa-solid fa-table-cells fa-lg icon" [ngClass]="{ active: !isRegularView }" data-tooltip="Kafelki"></i>
+      </div>
+      <div *ngIf="!isRegularView" (click)="toggleView('regular')">
+        <span>Widok:</span><i class="fa-solid fa-table-list fa-lg icon" [ngClass]="{ active: isRegularView }" data-tooltip="Lista"></i>
+      </div>
+    </div>
+
+    <div class="events" *ngIf="isRegularView">
+      <div class="empty-results" *ngIf="isResultEmpty">
+        <p>Wygląda na to, że żadno wydarzenie nie spełnia warunków wyszukiwania.</p>
+      </div>
+      <div *ngFor="let item of items$">
+        <event-card [id]="item.id" [title]="item.title" [image]="item.image" [text]="item.text"
+                    [tickets]="ticketsMap[item.id]" [date]="item.date" [location]="item.location">
+        </event-card>
+      </div>
+    </div>
+
+    <div class="events-wide" *ngIf="!isRegularView">
+      <div class="empty-results" *ngIf="isResultEmpty">
+        <p>Wygląda na to, że żadne wydarzenie nie spełnia warunków wyszukiwania.</p>
+      </div>
+      <div *ngFor="let item of items$">
+        <event-card-wide [id]="item.id" [title]="item.title" [image]="item.image" [text]="item.text"
+                         [tickets]="ticketsMap[item.id]" [date]="item.date" [location]="item.location">
+        </event-card-wide>
+      </div>
+     </div>
+  </div>
+</div>

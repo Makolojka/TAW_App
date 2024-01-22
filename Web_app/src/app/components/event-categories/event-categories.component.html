@@ -1,0 +1,62 @@
+<div class="main">
+  <h1>Kategorie wydarzeń</h1>
+  <div class="categories">
+
+  <div class="popular">
+    <button class="cat-button" (click)="onCategoryButtonClick('Muzyka')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-music icon"></i>
+      </span>
+      <span class="cat-name">Muzyka</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Kino')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-film icon"></i>
+      </span>
+      <span class="cat-name">Kino</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Teatr')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-masks-theater icon"></i>
+      </span>
+      <span class="cat-name">Teatr</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Targi')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-briefcase icon"></i>
+      </span>
+      <span class="cat-name">Targi</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Konwenty')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-people-group icon"></i>
+      </span>
+      <span class="cat-name">Konwenty</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Sport')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-volleyball icon"></i>
+      </span>
+      <span class="cat-name">Sport</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Zwiedzanie')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-eye icon"></i>
+      </span>
+      <span class="cat-name">Zwiedzanie</span>
+    </button>
+    <button class="cat-button" (click)="onCategoryButtonClick('Inne')" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-bars icon"></i>
+      </span>
+      <span class="cat-name">Inne</span>
+    </button>
+    <button class="cat-button-all" [routerLink]="'/events'">
+      <span class="button-icon">
+        <i class="fa-solid fa-layer-group icon"></i>
+      </span>
+      <span class="cat-name-all">Wszystkie wydarzenia</span>
+    </button>
+  </div>
+  </div>
+</div>

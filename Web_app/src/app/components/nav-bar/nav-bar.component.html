@@ -1,0 +1,103 @@
+<div class="fixed-top">
+  <div id="menuHolder">
+    <div role="navigation" class="sticky-top border-bottom border-top shadow" id="mainNavigation">
+      <div class="flexMain">
+        <div class="flex2" *ngIf="!isMenuToggled">
+          <button class="whiteLink siteLink" style="border-right:1px solid #eaeaea" (click)="menuToggle()">
+            <i class="fas fa-bars me-2"></i> MENU</button>
+          <button *ngIf="!authService.isOrganizer()" class="whiteLink siteLink" [routerLink]="['/organizer/overview']">Jesteś organizatorem?</button>
+          <button *ngIf="authService.isOrganizer()" class="whiteLink siteLink" [routerLink]="['/event-manager']">
+            <i class="fa-solid fa-solar-panel me-0" style="font-size: 18px"></i>
+          </button>
+        </div>
+        <div class="flex3 text-center" id="siteBrand">
+          <img [routerLink]="'/'"
+            src="./assets/log.png"
+            height="45"
+            alt="BiletSfera"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="flex2 text-end d-block d-md-none">
+        </div>
+        <div class="flex2 text-end d-none d-md-block">
+          <button class="whiteLink siteLink" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']" [queryParams]="{ register: true }">Zarejestruj się</button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/cart']">
+            <div class="position-relative">
+              <i class="fa-solid fa-ticket me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ ticketCount }}
+              </span>
+            </div>
+          </button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/liked']">
+            <div class="position-relative">
+              <i class="fa-solid fa-heart me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ likedCount }}
+              </span>
+            </div>
+          </button>
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" [routerLink]="['/wishlist']">
+            <div class="position-relative">
+              <i class="fa-solid fa-bell me-1" style="font-size: 18px"></i>
+              <span class="position-absolute top-0 start-75 translate-middle badge rounded-pill bg-danger">
+                {{ followedCount }}
+              </span>
+            </div>
+          </button>
+          <button class="blackLink siteLink" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']">Zaloguj się</button>
+
+          <button class="blackLink siteLink" *ngIf="authService.isLoggedIn()" (click)="signOut()">
+            <i class="fa-solid fa-right-from-bracket" style="font-size: 18px"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+
+    <div id="menuDrawer">
+      <div class="p-4 border-bottom">
+        <div class='row'>
+          <div class="col">
+            <span class="menu-span">Menu</span>
+          </div>
+          <div class="col text-end ">
+            <i class="fas fa-times" role="btn" (click)="menuToggle()"></i>
+          </div>
+        </div>
+      </div>
+      <div>
+        <a class="nav-menu-item" [routerLink]="'/'"><i class="fa-solid fa-house me-3"></i>Wydarzenia</a>
+
+        <a class="nav-menu-item" *ngIf="!authService.isLoggedIn()"
+           [routerLink]="['/login']" [queryParams]="{ register: true }"><i class="fa-solid fa-user-plus me-3"></i>Zarejestruj się</a>
+
+        <a class="nav-menu-item" *ngIf="!authService.isLoggedIn()" [routerLink]="['/login']">
+          <i class="fa-solid fa-right-to-bracket me-3"></i>Zaloguj się</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isOrganizer()"
+           [routerLink]="'/event-manager'"><i class="fa-solid fa-solar-panel me-3"></i>Panel organizatora</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/cart']"><i class="fa-solid fa-basket-shopping me-3"></i>Koszyk({{ ticketCount }})</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/user-details']"><i class="fa-solid fa-address-card me-3"></i>Dane konta</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/transactions']"><i class="fa-solid fa-ticket me-3"></i>Transakcje</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/wishlist']"><i class="fa-solid fa-bell me-3"></i>Obserwowane</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()"
+           [routerLink]="['/liked']"><i class="fa-solid fa-heart me-3"></i>Polubione</a>
+
+        <a class="nav-menu-item" *ngIf="authService.isLoggedIn()" (click)="signOut()">
+          <i class="fa-solid fa-right-from-bracket me-3"></i>Wyloguj się</a>
+      </div>
+    </div>
+  </div>
+</div>

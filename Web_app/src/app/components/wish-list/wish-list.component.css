@@ -1,0 +1,141 @@
+.wishlist {
+  margin: 100px 20px;
+  padding: 0 100px;
+}
+
+@media screen and (max-width: 768px) {
+  .wishlist {
+    margin: 100px 20px;
+    padding: 0 20px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .wishlist {
+    margin: 100px 40px;
+    padding: 0 20px;
+  }
+}
+
+.wishlist h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--third-color);
+}
+
+.wishlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.wishlist-table th,
+.wishlist-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.wishlist-table th {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--main-background);
+  text-align: center;
+  background-color: var(--third-color);
+}
+
+.wishlist-item-name,
+.wishlist-item-price,
+.wishlist-item-availability,
+.wishlist-item-actions {
+  text-align: center;
+}
+.wishlist-item-name{
+  text-align: left;
+}
+
+
+.btn-wishlist {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /*border-radius: 25px;*/
+  padding: 0px 0px;
+  min-width: 85px;
+  min-height: 35px;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon {
+  font-size: 14px;
+}
+
+.btn-wishlist p {
+  color: var(--main-background);
+}
+
+.btn-wishlist:hover {
+  color: white;
+  background-color: var(--main-bg-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--main-bg-color);
+  transition: all 0.5s ease-in-out;
+}
+
+.btn-delete:hover {
+  color: white;
+  background-color: #963939;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #963939;
+  transition: all 0.5s ease-in-out;
+}
+
+.empty-item{
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  padding: 0px 10px;
+  color: #222;
+}
+
+@media screen and (max-width: 1100px) {
+  .btn-wishlist {
+    padding: 0px 5px;
+    min-width: 50px;
+    min-height: 25px;
+    margin: 0 5px;
+  }
+  .icon {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 574px) {
+  .btn-wishlist {
+    padding: 0px 5px;
+    min-width: 50px;
+    min-height: 25px;
+    margin: 0 5px;
+  }
+  .icon {
+    font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .btn-wishlist {
+    padding: 0px 5px;
+    min-width: 50px;
+    min-height: 25px;
+    margin: 5px 0px;
+  }
+  .icon {
+    font-size: 10px;
+  }
+  .align-center-row {
+    flex-direction: column;
+  }
+}

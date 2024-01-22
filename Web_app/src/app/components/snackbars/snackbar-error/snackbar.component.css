@@ -1,0 +1,48 @@
+/*mat-form-field {*/
+/*  margin-right: 12px;*/
+/*}*/
+/*:host {*/
+/*  display: flex;*/
+/*}*/
+
+/*.snackbar-msg {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  color: white;*/
+/*}*/
+
+/*.snackbar-ok{*/
+/*  color: white;*/
+/*}*/
+.error-snackbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--red-color);
+  color: white;
+  border-radius: 2px;
+}
+
+.snackbar-content {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  margin-right: 12px;
+  font-size: 24px;
+}
+
+.text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.actions {
+  margin-left: auto;
+}

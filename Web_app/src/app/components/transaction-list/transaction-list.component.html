@@ -1,0 +1,29 @@
+<nav-bar></nav-bar>
+<div class="transaction-details">
+  <h1>Historia zakupów</h1>
+  <table class="wishlist-table">
+    <thead>
+    <tr>
+      <th style="text-align: left">Data</th>
+      <th>Koszt zamówienia</th>
+      <th>Zakupione bilety</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let transaction of transactions" class="cart-item">
+      <td class="wishlist-item-name">{{ transaction.saleDate | date: 'dd.MM.yyyy HH:mm' }}</td>
+      <td>{{ transaction.totalCost }} zł</td>
+      <td>
+        <ul>
+          <li *ngFor="let ticket of transaction.ticketDetails" class="row-space">
+            {{ ticket.count }} bilet(ów) {{ ticket.ticketName }} - {{ ticket.ticketPrice }} zł
+            <button class="button-pdf"
+                    (click)="generateTicketPdf(ticket.ticketName, ticket.ticketPrice, ticket.count, ticket.eventId, transaction.id, transaction)">
+              Pobierz jako PDF</button>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

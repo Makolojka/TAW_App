@@ -1,0 +1,151 @@
+.content{
+  padding: 20px 0px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.content h1{
+  padding: 25px 50px 0 50px;
+  width: 100%;
+}
+.carousel-inner {
+  padding: 1em;
+}
+.card {
+  margin: 0 0.5em;
+  box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+  border: none;
+}
+.spacer{
+  border: 1px solid #ccc;
+}
+
+.brightness-70{
+  filter: brightness(0.6);
+}
+
+/*Modals styles*/
+.modal{
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-header{
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-body {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 40px;
+  /*background-color: #f7f7f7;*/
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-body p {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+  font-family: Bahnschrift, sans-serif;
+}
+
+.modal-footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 40px 20px 40px;
+  border-top: 1px solid #ddd;
+}
+.modal-dialog{
+  max-width: 700px;
+  max-height: 1600px;
+}
+
+.modal-content{
+  background-color: white;
+}
+
+.close{
+  background-color: transparent;
+  border: none;
+  transition: all ease-in-out 0.3s;
+}
+
+.close:hover{
+  scale: 1.2;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.btn-register{
+  width: 250px;
+}
+
+.modal button {
+  border-radius: 0px;
+  border: 1px solid var(--main-bg-color);
+  background-color: var(--main-bg-color);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+.modal button:hover{
+  border: 1px solid var(--third-color);
+  background-color: var(--third-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.modal button:active {
+  transform: scale(0.95);
+}
+
+.modal button:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 768px) {
+  .content{
+    padding: 20px 5px;
+  }
+
+}
+
+/*Local events*/
+.local{
+  width: 100%;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.button-style
+{
+  color: var(--secondary-color);
+  border: none;
+}
+
+h1{
+  color: var(--third-color);
+  font-weight: 500;
+}
+
+.align-center-column button{
+  text-transform: uppercase;
+  background-color: transparent;
+  width: 30%;
+  padding: 10px 0px;
+  border: 1px solid #ccc;
+  color: #6b6b6b;
+  transition: all 0.3s ease-in-out;
+}
+.align-center-column button:hover{
+  border: 1px solid var(--third-color);
+  color: var(--third-color);
+  transition: all 0.3s ease-in-out;
+}

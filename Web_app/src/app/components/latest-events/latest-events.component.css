@@ -1,0 +1,25 @@
+.main{
+  padding: 0px 50px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.popular
+{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.button-style
+{
+  color: var(--secondary-color);
+  border: none;
+}
+
+h1{
+  color: var(--third-color);
+  font-weight: 500;
+}

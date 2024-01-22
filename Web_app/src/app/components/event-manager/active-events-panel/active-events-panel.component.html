@@ -1,0 +1,134 @@
+<div *ngIf="panelManagerService.activeEventsVisible" class="align-center-column-image">
+  <!-- Content for Active Events -->
+  <div class="panel-div" *ngIf="!areEventsPresent">
+    <img src="././assets/img/calendar.png" alt="No events image" class="calendar-img">
+    <div class="missing-text">
+      <h4>Brak aktywnych wydarzeń</h4>
+    </div>
+    <div class="create-event-btn" (click)="panelManagerService.showEventCreation()">
+      <h4>Utwórz wydarzenie</h4>
+    </div>
+  </div>
+<div class="align-center-row-wrap">
+  <div *ngFor="let event of eventDetails" class="event" [ngClass]="{ 'inactive-event': !event.isActive }">
+    <div class="button-container" *ngIf="event.isActive" (click)="openModal(event, 'updateEventModal')">
+      <i class="fa-solid fa-edit"></i>
+    </div>
+    <div class="button-container-delete" *ngIf="event.isActive" (click)="deactivateEvent(event.id)">
+      <i class="fa-solid fa-trash"></i>
+    </div>
+    <div class="image-container" (click)="navigateToEvent(event.isActive, event.id)">
+      <img [src]="event.image" alt="Card Image" class="event-img">
+    </div>
+    <div class="content-top">
+      <div class="event-title-container">
+        <p style="font-size: 22px" class="event-title">{{ event.title }}</p>
+      </div>
+    </div>
+    <div class="content-bottom">
+      <div class="align-left-row-icon">
+        <i class="fa-solid fa-calendar icon"></i><p class="event-info">{{ event.date }}</p>
+      </div>
+      <div class="align-left-row-icon">
+        <i class="fa-solid fa-location-crosshairs icon"></i><p class="event-info">{{ event.location }}</p>
+      </div>
+    </div>
+
+    <div class="align-center-row" style="margin: 8px 10px; justify-content: space-between;">
+      <div class="icon-container">
+        <i class="fa-solid fa-ticket icon" style="color: var(--main-bg-color)"></i>
+        <p style="color: var(--main-bg-color)" class="event-info">{{ event.totalSoldForEvent }}</p>
+      </div>
+      <div class="icon-container">
+        <i class="fa-solid fa-eye icon" style="color: #00679f"></i>
+        <p style="color: #00679f" class="event-info">{{ event.views }}</p>
+      </div>
+      <div class="icon-container">
+        <i class="fa-solid fa-money-bill-1-wave icon" style="color: var(--secondary-variant-color)"></i>
+        <p class="event-info" style="color: var(--secondary-variant-color)">
+          {{ event.totalEarningsForEvent !== undefined ? event.totalEarningsForEvent.toFixed(2) : 'Loading earnings...' }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+  <!--Edit existing event modal-->
+  <div class="modal" tabindex="-1" role="dialog" id="updateEventModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header left-aligned">
+          <h1>Edytuj wydarzenie</h1>
+          <a class="close" (click)="closeModal('updateEventModal')" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-close icon"></i>
+          </a>
+        </div>
+        <div class="modal-body">
+          <div class="form-container">
+            <form>
+              <!-- Fields for editing ticket details -->
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Nazwa wydarzenia</h2>
+              </div>
+              <input type="text" class="input-normal" [(ngModel)]="eventName" name="event_name" id="event_name" placeholder="Wprowadź nazwę wydarzenia">
+              <div class="align-center-column">
+                <div *ngIf="isEventFormSubmitted && !eventName" class="error">Pole nie może być puste.</div>
+              </div>
+
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Krótki opis wydarzenia</h2>
+              </div>
+              <input type="text" class="input-normal" [(ngModel)]="eventText" name="event_text" id="event_text" placeholder="Wprowadź krótki tekst opisujący wydarzenie">
+              <div class="align-center-column">
+                <div *ngIf="isEventFormSubmitted && !eventText" class="error">Pole nie może być puste.</div>
+              </div>
+
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Nazwa miasta</h2>
+              </div>
+              <input type="text" class="input-normal" [(ngModel)]="eventCity"
+                     name="eventCity" id="eventCity"
+                     placeholder="Wprowadź nazwę miasta">
+              <div *ngIf="isEventFormSubmitted && !eventCity" class="error">Pole nie może być puste.</div>
+
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Nazwa lokalu</h2>
+              </div>
+              <input type="text" class="input-normal" [(ngModel)]="eventPlace"
+                     name="eventPlace" id="eventPlace"
+                     placeholder="Wprowadź nazwę lokalu/miejsca np. Kraków EXPO">
+              <div *ngIf="isEventFormSubmitted && !eventPlace" class="error">Pole nie może być puste.</div>
+
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Grafika promocyjna</h2>
+              </div>
+              <input type="text" class="input-normal" [(ngModel)]="promoImage"
+                     name="promoImage" id="promoImage"
+                     placeholder="Wprowadź url zawierający plik z grafiką">
+              <div class="align-center-column">
+                <div *ngIf="isEventFormSubmitted && !promoImage" class="error">Pole nie może być puste.</div>
+              </div>
+
+              <div class="h2-modal-container">
+                <h2 class="h2-modal">Dodatkowe informacje o wydarzeniu</h2>
+              </div>
+              <textarea
+                class="additional-info-ta"
+                [(ngModel)]="additionalInfo"
+                name="additionalInfo"
+                id="additionalInfo"
+                cols="30"
+                rows="10"
+                placeholder="Wprowadź dodatkowe informacje o wydarzeniu."
+              ></textarea>
+              <div *ngIf="isEventFormSubmitted && !additionalInfo" class="error">Pole nie może być puste.</div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="updateExistingEvent()">Zaktualizuj</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

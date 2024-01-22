@@ -1,0 +1,77 @@
+<div class="main">
+  <nav-bar></nav-bar>
+  <div class="summary-container" *ngIf="validOrder">
+    <h1>Podsumowanie zamówienia</h1>
+    <div class="main-divs-container">
+      <div class="main-div">
+        <div class="ordered-items" >
+          <h2>Zamówione bilety</h2>
+          <table class="cart-table">
+            <thead>
+            <tr>
+              <th>NAZWA BILETU</th>
+              <th>CENA</th>
+              <th>ILOŚĆ</th>
+              <th>W SUMIE RAZEM</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let cartItem of cartData?.cart">
+              <tr class="cart-item" *ngFor="let ticket of cartItem.tickets">
+                <td class="cart-item-name" > {{ cartItem.event.title }}
+                  <div *ngIf="cartItem.event.category.includes('Kino')" class="align-left-row">
+                    <span style="font-size: 12px">Wybrane miejsca:</span>
+                    <div class="align-left-row flex-wrap" style="display: flex; justify-content: flex-start">
+                      <span *ngFor="let seatNumbers of ticket.seatNumbers" class="cart-item-name" style="font-size: 12px; margin: 5px" [routerLink]="'event/detail'">{{ seatNumbers }}</span>
+                    </div>
+                  </div></td>
+                <td class="cart-item-price">{{ ticket.price }} zł</td>
+                <td class="cart-item-quantity">{{ ticket.quantity }}</td>
+                <td class="cart-item-sum">{{ ticket.quantity * ticket.price }} zł</td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="credentials-container">
+          <div class="title">
+            <h2>Twoje dane</h2>
+          </div>
+          <div class="credentials">
+            <h4>{{user.name}}</h4>
+            <h4>{{user.email}}</h4>
+          </div>
+        </div>
+        <span class="disclaimer">Kupione bilety będą dostępne w zakładce Transakcje.</span>
+      </div>
+
+      <div class="total-amount">
+        <div class="total-amount-title">
+          <h2>Łączna kwota</h2>
+        </div>
+        <div class="detail">
+          <h4>Rabat</h4>
+          <h4>0 zł</h4>
+        </div>
+        <div class="total-details">
+          <h3>Razem</h3>
+          <span>{{ getTotalSum() }} zł</span>
+        </div>
+        <button (click)="buyTickets()">Zamawiam i płacę</button>
+        <div class="payment-icons">
+          <img src="./assets/img/mastercard.png" alt="mastercard">
+          <img src="./assets/img/payu.png" alt="payu">
+          <img src="./assets/img/blik.webp" alt="mastercard">
+          <img src="./assets/img/przelewy.png" alt="przelewy24">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty-data-container" *ngIf="!validOrder">
+    <h2>Coś poszło nie tak. Wróć do strony z koszykiem.</h2>
+    <button [routerLink]="['/cart']">Koszyk</button>
+  </div>
+
+</div>

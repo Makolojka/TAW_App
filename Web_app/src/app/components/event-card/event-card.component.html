@@ -1,0 +1,18 @@
+<div class="whole-card" [routerLink]="['event/detail/' + id]">
+  <div class="card">
+    <img [src]="image" alt="Event Image" class="card-image">
+    <div class="card-content">
+      <div class="card-details">
+        <p class="card-description">{{text | textRestrain:110}}</p>
+        <h2>Od {{ getLowestTicketPrice() }} zł </h2>
+        <main-button [routerLink]="['event/detail/' + id]" [text]="'Kup bilet'" [buttonClass]="'mt-1 btn btn-special'" [icon]="'fa-ticket'"></main-button>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: flex-start; flex-direction: column; flex-wrap: wrap; max-width: 200px; min-height: 155px;
+  cursor: pointer;">
+    <h3>{{ title }}</h3>
+    <p class="date">{{ date }}</p>
+    <p class="date">{{ location }}</p>
+  </div>
+</div>

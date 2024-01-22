@@ -1,0 +1,158 @@
+<div class="main">
+  <div class="section-1">
+    <nav-bar></nav-bar>
+    <div class="background-image">
+      <div class="image-container">
+        <img src="../../../assets/img/party.jpg" alt="Organizer Image" class="background-img">
+      </div>
+      <div class="content">
+        <h1>Jesteś organizatorem?</h1>
+        <p>Załóż konto organizatora już dziś. Twórz, edytuj, zarządzaj wydarzeniami i analizuj dane sprzedaży dostępne w panelu organizatora.</p>
+        <div class="align-left-row">
+          <button class="btn spacing" (click)="openModal('registerModal')">Utwórz konto</button>
+          <button class="btn" (click)="openModal('loginModal')">Zaloguj się</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="organizer-features">
+
+      <div class="organizer-content" *ngIf="authService.isOrganizer() && authService.isLoggedIn()">
+        <div class="section-title">
+          <span class="line"></span>
+          <h1>Wygląda na to, że już jesteś z nami!</h1>
+          <h3>Sprawdź swoje możliwości poniżej.</h3>
+        </div>
+
+        <div class="icon-div">
+<!--          <i class="fa-solid fa-ticket icon-panel"></i>-->
+          <div class="action-button">
+            <h2 (click)="goToOrganizerPanel()">Panel organizatora</h2>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="section-title">
+        <span class="line"></span>
+        <h1>Możliwości konta organizatora.</h1>
+      </div>
+      <div class="section-features">
+        <div class="features">
+          <div class="feature" (click)="toggleFeatureDescription('Twórz')">
+            <div class="icon-circle">
+              <i class="fa-solid fa-calendar-plus icon"></i>
+            </div>
+            <span>Twórz</span>
+          </div>
+          <div class="feature" (click)="toggleFeatureDescription('Zarządzaj')">
+            <div class="icon-circle">
+              <i class="fa-solid fa-list-check icon"></i>
+            </div>
+            <span>Zarządzaj</span>
+          </div>
+          <div class="feature" (click)="toggleFeatureDescription('Sprzedawaj')">
+            <div class="icon-circle">
+              <i class="fa-brands fa-sellcast icon"></i>
+            </div>
+            <span>Sprzedawaj</span>
+          </div>
+          <div class="feature" (click)="toggleFeatureDescription('Analizuj')">
+            <div class="icon-circle">
+              <i class="fa-solid fa-chart-line icon"></i>
+            </div>
+            <span>Analizuj</span>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let feature of features">
+        <div *ngIf="selectedFeature === feature.title" class="text-container" [@fadeIn]>
+          <h2>{{ feature.title }}</h2>
+          <p>{{ feature.description }}</p>
+        </div>
+      </div>
+    </div>
+
+  <custom-footer class="cf-mg-0"></custom-footer>
+  <!--    End of section-1   -->
+  </div>
+
+  <!--  Login modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="loginModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <a class="logo" [routerLink]="['/']"><img src="assets/log.png"></a>
+          <a class="close" (click)="closeModal('loginModal')" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-close icon"></i>
+          </a>
+        </div>
+        <div class="modal-body">
+          <div class="form-container sign-in-container">
+            <form action="post" autocomplete="off" method="POST">
+              <h1>Zaloguj się</h1>
+              <h2>(organizator)</h2>
+              <input type="login" placeholder="Login" name="username" title="Login" [(ngModel)]="signInCredentials.login">
+              <div *ngIf="isFormSubmitted && !signInCredentials.login" class="error">Pole nie może być puste.</div>
+              <div *ngIf="incorrectCredentials" class="error">Podano błędny login lub hasło.</div>
+
+              <input type="password" placeholder="Hasło" [(ngModel)]="signInCredentials.password" name="password" title="Password">
+              <div *ngIf="isFormSubmitted && !signInCredentials.password" class="error">Pole nie może być puste.</div>
+              <a href="#">Zapomniałeś hasła?</a>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn" (click)="signIn()" >Zaloguj się</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--  Register modal -->
+  <div class="modal" tabindex="-1" role="dialog" id="registerModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--          <h5 class="modal-title">Zaloguj się</h5>-->
+          <a class="logo" [routerLink]="['/']"><img src="assets/log.png"></a>
+          <a class="close" (click)="closeModal('registerModal')" data-dismiss="modal" aria-label="Close">
+            <i class="fa-solid fa-close icon"></i>
+          </a>
+        </div>
+        <div class="modal-body">
+          <div class="form-container sign-up-container">
+            <form action="#">
+              <h1>Utwórz konto</h1>
+              <h2>(organizator)</h2>
+              <input type="text" class="fadeIn third" name="mem_name" id="mem_name" placeholder="Login" [(ngModel)]="signUpCredentials.name" required>
+              <div *ngIf="isSignUpFormSubmitted && !signUpCredentials.name" class="error">Pole nie może być puste.</div>
+
+              <input type="email" name="emailid" id="emailid" placeholder="Email"
+                     [(ngModel)]="signUpCredentials.email" required>
+              <div *ngIf="isSignUpFormSubmitted && !signUpCredentials.email" class="error">Pole nie może być puste.</div>
+
+              <input type="password" class="fadeIn third" name="password" id="password"
+                     placeholder="Hasło (5-15 znaków, 1 litera mała i duża oraz 1 znak specjalny)"
+                     [(ngModel)]="signUpCredentials.password" required>
+              <div *ngIf="isSignUpFormSubmitted && (!signUpCredentials.password || !isPasswordStrong(signUpCredentials.password))" class="error">
+                <div *ngIf="!signUpCredentials.password" class="error">Pole nie może być puste.</div>
+                <div *ngIf="signUpCredentials.password && !isPasswordStrong(signUpCredentials.password)" class="error">Hasło jest zbyt słabe.</div>
+              </div>
+              <input #rePasswordInput type="password" class="fadeIn third" name="rePassword" id="rePassword"
+                     placeholder="Powtórz hasło" [(ngModel)]="rePassword" required>
+              <div *ngIf="isSignUpFormSubmitted && signUpCredentials.password !== rePassword" class="error">Hasła się nie zgadzają.</div>
+              <div *ngIf="inSignUpCorrectCredentials" class="error">Podany email lub login został już zajęty.</div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-register" (click)="signUp()" >Zarejestruj się</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

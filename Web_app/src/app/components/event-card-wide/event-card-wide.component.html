@@ -1,0 +1,32 @@
+<div class="wide-card" [routerLink]="['event/detail/' + id]">
+  <!-- Image container -->
+  <div class="image-container">
+    <!-- Your image here -->
+    <img [src]="image" alt="Event Image" class="">
+  </div>
+
+  <!-- Content section -->
+  <div class="content">
+    <!-- Top and Bottom section container (Row) -->
+    <div class="top-bottom-container">
+      <!-- Top section -->
+      <div class="top-section">
+        <div class="title">{{ title }}</div>
+        <div class="date-location">
+          <div class="date">{{ date }}</div>
+          <div class="location">{{ location }}</div>
+        </div>
+        <div class="btn-small-screen"><main-button routerLink="event/detail" [text]="'Kup bilet'" [buttonClass]="'btn btn-special-wide m-l w-200'" [icon]="'fa-ticket'"></main-button></div>
+      </div>
+
+      <!-- Bottom section -->
+      <div class="bottom-section">
+        <div class="price">Od {{ getLowestTicketPrice() }} zł</div>
+        <main-button [routerLink]="['event/detail/' + id]" [text]="'Kup bilet'" [buttonClass]="'mt-1 btn btn-special-wide w-200'" [icon]="'fa-ticket'"></main-button>
+      </div>
+    </div>
+
+    <!-- Short description -->
+    <div class="short-description">{{text | textRestrain:170}}</div>
+  </div>
+</div>

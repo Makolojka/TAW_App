@@ -1,0 +1,93 @@
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: #e1e1e1;
+  width: 6vh;
+  height: 6vh;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (min-width: 768px) {
+  /*.carousel-item {*/
+  /*  margin-right: 0;*/
+  /*  flex: 0 0 33.333333%;*/
+  /*  display: block;*/
+  /*}*/
+  /*.carousel-inner {*/
+  /*  display: flex;*/
+  /*}*/
+}
+.card .img-wrapper {
+  max-width: 100%;
+  height: 13em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card img {
+  max-height: 100%;
+}
+@media (max-width: 767px) {
+  .card .img-wrapper {
+    height: 17em;
+  }
+}
+.custom-carousel {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.custom-carousel .custom-carousel-inner {
+  display: flex;
+  justify-content: center;
+  /*width: 1020px;*/
+  /*background-color: white;*/
+  transition: transform 0.3s ease-in-out;
+  margin: 0;
+}
+
+.custom-carousel .custom-carousel-item {
+  /*flex: 0 0 25%;*/
+  display: flex;
+  justify-content: center;
+}
+
+.custom-carousel .custom-carousel-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 30%;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: var(--third-color);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  width: 40px;
+  height: 50px;
+  z-index: 99;
+}
+
+.carousel-control-prev {
+  left: -0px;
+}
+
+.carousel-control-next {
+  right: -0px;
+}
+
+.carousel-control-disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

@@ -1,0 +1,25 @@
+<nav-bar></nav-bar>
+<div class="wishlist">
+  <h2>Polubione</h2>
+  <div class="wishlist-items">
+    <div class="wishlist-header">
+      <div class="wishlist-header-name">Nazwa</div>
+      <div class="wishlist-header-date">Data wydarzenia</div>
+      <div class="wishlist-header-actions">Usuń z ulubionych</div>
+    </div>
+    <div class="wishlist-item" *ngIf="isItemsEmpty">
+      <div class="wishlist-item-name">Brak polubionych wydarzeń</div>
+    </div>
+    <div class="wishlist-item" *ngFor="let item of items$">
+      <div class="wishlist-item-name" [routerLink]="'event/detail'">{{item.title}}</div>
+      <div class="wishlist-item-date">{{item.date}}</div>
+      <div class="wishlist-item-actions">
+        <div class="align-center-row">
+          <button class="btn-wishlist" (click)="likeEvent(item.id)">
+            <i class="fa-solid fa-heart icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

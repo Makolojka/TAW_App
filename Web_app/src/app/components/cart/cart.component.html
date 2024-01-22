@@ -1,0 +1,87 @@
+<nav-bar></nav-bar>
+<div class="cart">
+  <h2>Koszyk</h2>
+  <table class="cart-table">
+    <thead>
+    <tr class="cart-header">
+      <th style="text-align: left" *ngIf="screenSize > 460"></th>
+      <th style="text-align: left">NAZWA BILETU</th>
+      <th>CENA</th>
+      <th>ILOŚĆ</th>
+      <th>W SUMIE RAZEM</th>
+      <th>USUŃ Z KOSZYKA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <ng-container *ngFor="let cartItem of cartData?.cart">
+      <tr class="cart-item" *ngFor="let ticket of cartItem.tickets" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">
+        <td class="cart-item-image" *ngIf="screenSize > 460">
+          <ng-container *ngIf="!isEventExpired(cartItem.event.date)">
+            <a [routerLink]="['event/detail/' + cartItem.event._id]">
+              <img [src]="cartItem.event.image" alt="Event Image">
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isEventExpired(cartItem.event.date)">
+            <img [src]="cartItem.event.image" alt="Event Image" style="filter: grayscale(100%);">
+          </ng-container>
+        </td>
+        <td class="cart-item-name" [routerLink]="'event/detail'" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">
+          <div class="title-container">
+            <span>{{ cartItem.event.title }}</span>
+            <div *ngIf="cartItem.event.category.includes('Kino')" class="chosen-seats">
+              <span style="font-size: 12px">Wybrane miejsca:</span>
+              <div class="align-left-row flex-wrap" style="display: flex; justify-content: flex-start">
+                <span *ngFor="let seatNumbers of ticket.seatNumbers" class="cart-item-name" style="font-size: 12px; margin: 5px" [routerLink]="'event/detail'">{{ seatNumbers }}</span>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td class="cart-item-price" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">{{ ticket.price }} zł</td>
+        <td class="cart-item-quantity" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">
+          <div class="right-section">
+            <button *ngIf="!cartItem.event.category.includes('Kino')" class="btn plus-btn" [ngClass]="{ 'expired-btn': isEventExpired(cartItem.event.date) }"
+                    (click)="isEventExpired(cartItem.event.date) ? null : decrementQuantity(userId, cartItem.event._id, ticket._id)">
+              <i class="fas fa-minus"></i>
+            </button>
+            <div class="counter" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">{{ ticket.quantity }}</div>
+            <button *ngIf="!cartItem.event.category.includes('Kino')" class="btn minus-btn" [ngClass]="{ 'expired-btn': isEventExpired(cartItem.event.date) }"
+                    (click)="isEventExpired(cartItem.event.date) ? null : incrementQuantity(userId, cartItem.event._id, ticket._id)">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+        </td>
+        <td class="cart-item-sum" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">{{ ticket.quantity * ticket.price }} zł</td>
+        <td class="cart-item-actions" [ngClass]="{ 'expired-item': isEventExpired(cartItem.event.date) }">
+          <div class="align-center-row">
+            <button class="btn-wishlist btn-delete" (click)="removeWholeTicket(userId, cartItem.event._id, ticket._id, ticket.quantity)">
+              <i class="fa-solid fa-trash-can icon"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+
+  <div class="empty-item" *ngIf="isCartDataEmpty">
+    <p>Koszyk jest pusty</p>
+  </div>
+
+  <div class="cart-bottom-section">
+    <div class="cart-coupon">
+      <h5>Zastosuj kod promocyjny</h5>
+      <div class="align-center-row">
+        <input type="text" placeholder="Wprowadź kod promocyjny">
+        <button><div>Zastosuj</div></button>
+      </div>
+    </div>
+    <div class="cart-sum">
+      <!-- <h4>Suma</h4> -->
+      <div class="align-left-row">
+        <h3>Łączna kwota:</h3>
+        <span>{{ getTotalSum() }} zł</span>
+      </div>
+      <button (click)="makeOrder()">Kup bilety</button>
+    </div>
+  </div>
+</div>

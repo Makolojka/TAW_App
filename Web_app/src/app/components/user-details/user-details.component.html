@@ -1,0 +1,130 @@
+<nav-bar></nav-bar>
+<div class="user-details">
+  <h2>Twoje dane</h2>
+  <form>
+    <div class="form-group">
+      <label for="name">Nazwa konta:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="user.name" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" [(ngModel)]="user.email" />
+    </div>
+
+    <div class="form-group preferences">
+      <h2>Preferencje</h2>
+<!--        <input type="checkbox" id="preference1" name="preference1" [(ngModel)]="user.preference1" />-->
+        <h3>Wybierz kategorie, które cię interesują.</h3>
+        <div class="categories">
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Muzyka')"
+               [class.category-tile-activated]="isCategorySelected('Muzyka')"
+               (click)="toggleCategory('category','Muzyka')">
+            <span>Muzyka</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Kino')"
+               [class.category-tile-activated]="isCategorySelected('Kino')"
+               (click)="toggleCategory('category','Kino')">
+            <span>Kino</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Teatr')"
+               [class.category-tile-activated]="isCategorySelected('Teatr')"
+               (click)="toggleCategory('category','Teatr')">
+            <span>Teatr</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Targi')"
+               [class.category-tile-activated]="isCategorySelected('Targi')"
+               (click)="toggleCategory('category','Targi')">
+            <span>Targi</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Konwenty')"
+               [class.category-tile-activated]="isCategorySelected('Konwenty')"
+               (click)="toggleCategory('category','Konwenty')">
+            <span>Konwenty</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Sport')"
+               [class.category-tile-activated]="isCategorySelected('Sport')"
+               (click)="toggleCategory('category','Sport')">
+            <span>Sport</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Zwiedzanie')"
+               [class.category-tile-activated]="isCategorySelected('Zwiedzanie')"
+               (click)="toggleCategory('category','Zwiedzanie')">
+            <span>Zwiedzanie</span>
+          </div>
+          <div class="category-tile"
+               [class.category-tile]="!isCategorySelected('Inne')"
+               [class.category-tile-activated]="isCategorySelected('Inne')"
+               (click)="toggleCategory('category','Inne')">
+            <span>Inne</span>
+          </div>
+        </div>
+
+      <h3>Wybierz podkategorie, które cię interesują</h3>
+      <div class="categories">
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Festiwale')"
+             [class.category-tile-activated]="isSubCategorySelected('Festiwale')"
+             (click)="toggleCategory('subCategory','Festiwale')">
+          <span>Festiwale</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Pop')"
+             [class.category-tile-activated]="isSubCategorySelected('Pop')"
+             (click)="toggleCategory('subCategory','Pop')">
+          <span>Pop</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Rock')"
+             [class.category-tile-activated]="isSubCategorySelected('Rock')"
+             (click)="toggleCategory('subCategory','Rock')">
+          <span>Rock</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Jazz_blues')"
+             [class.category-tile-activated]="isSubCategorySelected('Jazz_blues')"
+             (click)="toggleCategory('subCategory','Jazz_blues')">
+          <span>Jazz/Blues</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Metal')"
+             [class.category-tile-activated]="isSubCategorySelected('Metal')"
+             (click)="toggleCategory('subCategory','Metal')">
+          <span>Metal</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Disco_polo')"
+             [class.category-tile-activated]="isSubCategorySelected('Disco_polo')"
+             (click)="toggleCategory('subCategory','Disco_polo')">
+          <span>Disco polo</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Techno/Elektro')"
+             [class.category-tile-activated]="isSubCategorySelected('Techno/Elektro')"
+             (click)="toggleCategory('subCategory','Techno/Elektro')">
+          <span>Techno/Elektro</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Muzyka Klasyczna')"
+             [class.category-tile-activated]="isSubCategorySelected('Muzyka Klasyczna')"
+             (click)="toggleCategory('subCategory','Muzyka Klasyczna')">
+          <span>Muzyka klasyczna</span>
+        </div>
+        <div class="category-tile"
+             [class.category-tile]="!isSubCategorySelected('Inne')"
+             [class.category-tile-activated]="isSubCategorySelected('Inne')"
+             (click)="toggleCategory('subCategory','Inne')">
+          <span>Inne</span>
+        </div>
+      </div>
+
+    </div>
+    <button type="submit" (click)="updateUserDetails()">Zapisz zmiany</button>
+  </form>
+</div>
